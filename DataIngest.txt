@@ -1,0 +1,5 @@
+*** On Dumbo ***
+curl -O https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.tsv?accessType=DOWNLOAD&bom=true
+mv rows.tsv\?accessType\=DOWNLOAD rst.tsv 
+hdfs dfs -mkdir Final/input
+hdfs dfs -put rst.tsv Final/input
