@@ -1,9 +1,10 @@
-import java.io.IOException;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Mapper;
-import java.lang.Integer;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import java.io.FileReader;
+
 
 public class DataCleaningMapper extends Mapper<LongWritable, Text, Text, Text> {
   @Override
@@ -72,7 +73,7 @@ public class DataCleaningMapper extends Mapper<LongWritable, Text, Text, Text> {
 
     if (isDrop == false) {
       String key_tmp = items2[0] + ",";
-      line = items2[1] + "," + items2[5] + "," + items2[16] + "," + items2[17];
+      line = items2[1] + "," + items2[5] + "," + items2[8]  + "," + items2[16] + "," + items2[17];
       context.write(new Text(key_tmp), new Text(line));
     }
   }

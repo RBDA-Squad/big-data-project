@@ -5,7 +5,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class DataCleaning {
+public class AreaAccount {
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
       System.err.println("Usage: Crime Data <input path> <output path>");
@@ -13,15 +13,15 @@ public class DataCleaning {
     }
 
     Job job = new Job();
-    job.setJarByClass(DataCleaning.class);
-    job.setJobName("Process Crime Data Cleaning");
+    job.setJarByClass(AreaAccount.class);
+    job.setJobName("Process Crime Data Area Account");
     job.setNumReduceTasks(1);
 
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-    job.setMapperClass(DataCleaningMapper.class);
-    job.setReducerClass(DataCleaningReducer.class);
+    job.setMapperClass(AreaAccountMapper.class);
+    job.setReducerClass(AreaAccountReducer.class);
 
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(Text.class);
