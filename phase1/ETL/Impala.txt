@@ -1,0 +1,45 @@
+******************Create Table From Original Data*****************************
+CREATE EXTERNAL TABLE rts_raw(
+CAMIS STRING COMMENT '8-digit unique identifier',
+DBA STRING COMMENT 'Restaurant name',
+BORO STRING,
+BUILDING STRING,
+STREET STRING,
+ZIPCODE STRING COMMENT '5-digit code',
+PHONE STRING,
+CUISINE STRING,
+INSPECTION_DATE STRING COMMENT 'MONTH/DAY/YEAR',
+ACTION STRING,
+VIOLATION_CODE STRING,
+VIOLATION_DESCRIPTION STRING,
+CRITICAL_FLAG STRING,
+SCORE STRING,
+GRADE STRING,
+GRADE_DATE STRING COMMENT 'MONTH/DAY/YEAR',
+RECORD_DATE STRING COMMENT 'MONTH/	DAY/YEAR',
+INSPECTION_TYPE STRING,
+LATITUDE STRING,
+LONGITUDE STRING,
+COMMUNITY_BOARD STRING,
+COUNCIL_DISTRICT STRING,
+CENSUS_TRACT STRING,
+BIN STRING,
+BBL STRING,
+NTA STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION "/user/jl11046/Final/input/";
+
+ALTER TABLE rts_raw SET TBLPROPERTIES("skip.header.line.count"="1");
+************************Phase 1: Count restaurants by zip code*************************
+create table rts_phase1 as
+select zipcode, count(distinct camis) as num_of_rts 
+from rts_raw 
+where zipcode not in ("N/A", "NULL", "")
+group by zipcode 
+order by zipcode;
+
+select sum(num_of_rts) from rts_phase1;
+	=> 26587
+
+# export to local file system
+impala-shell -B -o ~/Final/data/phase1_rts_count.tsv --output_delimiter='\t' -i "compute-1-1" -q "use jl11046; select * from rts_phase1;"
