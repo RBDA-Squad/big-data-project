@@ -4,7 +4,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import org.apche.commons.math3.stat.regression.SimpleRegression
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 public class LinearRegressionReducer
       extends Reducer<Text, Text, Text, Text> {
@@ -21,8 +21,8 @@ public class LinearRegressionReducer
         for (Text value: values){
             String data = value.toString();
             String[] fields = data.split("\t");
-            int x = int(fields[0]);
-            int y = int(fields[1]);
+            int x = Integer.parseInt(fields[0]);
+            int y = Integer.parseInt(fields[1]);
             sr.addData(x, y);
         }
         String stat = String.valueOf(sr.getSlope()) + "\t" + String.valueOf(sr.getIntercept()) + "\t" + String.valueOf(sr.getSignificance());
