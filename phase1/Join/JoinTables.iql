@@ -1,0 +1,6 @@
+use jl11046;
+
+create table phase1_joined as
+select rts_phase1.zipcode, rts_phase1.num_of_rts, 311_phase1.num_of_cps, crime_phase1.num_of_cms
+from rts_phase1 inner join 311_phase1 on (rts_phase1.zipcode = 311_phase1.zipcode) 
+		inner join crime_phase1 on (rts_phase1.zipcode = crime_phase1.zipcode);
