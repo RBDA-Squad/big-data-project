@@ -1,6 +1,6 @@
 import java.io.IOException;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.IntWritable; 
+import org.apache.hadoop.io.LongWritable; 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.fs.Path;
@@ -23,7 +23,7 @@ import com.google.gson.JsonArray;
 import java.io.FileReader;
 
 
-public class DataCleaningMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class ZipCodeTableMapper extends Mapper<LongWritable, Text, Text, Text> {
   @Override
   public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
     String line = value.toString();
@@ -31,7 +31,7 @@ public class DataCleaningMapper extends Mapper<LongWritable, Text, Text, Text> {
     String[] items = line.split(";");
     String value_tmp = "";
 
-    if (items[1].equals("New York")) {
+    if (items[2].equals("NY") || items[2].equals("NJ")) {
        value_tmp = items[3] + "," + items[4];
        String key_tmp = items[0] + ",";
        context.write(new Text(key_tmp), new Text(value_tmp));

@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.lang.Integer;
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.IntWritable; 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import java.util.List;

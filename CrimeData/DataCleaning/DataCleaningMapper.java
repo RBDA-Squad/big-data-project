@@ -1,3 +1,20 @@
+import java.io.IOException;
+import org.apache.hadoop.io.IntWritable; 
+import org.apache.hadoop.io.LongWritable; 
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FSDataInputStream;
+
+import java.lang.Integer;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
@@ -53,7 +70,7 @@ public class DataCleaningMapper extends Mapper<LongWritable, Text, Text, Text> {
           items2[5] = "CHILD ABANDONMENT/NON SUPPORT 1";
           break;
       }
-
+       
       if (items2[1].length() == 11) {
         isDrop = true;
       }
@@ -66,13 +83,13 @@ public class DataCleaningMapper extends Mapper<LongWritable, Text, Text, Text> {
       if (items2[17].length() == 9) {
         isDrop = true;
       }
-
+      
     } else {
       isDrop = true;
     }
 
     if (isDrop == false) {
-      String key_tmp = items2[0] + ",";
+      String key_tmp = items2[0] + ","; 
       line = items2[1] + "," + items2[5] + "," + items2[8]  + "," + items2[16] + "," + items2[17];
       context.write(new Text(key_tmp), new Text(line));
     }

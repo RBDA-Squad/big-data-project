@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.lang.Integer;
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.IntWritable; 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import java.util.List;
@@ -15,7 +15,7 @@ public class DataProfilingReducer extends Reducer<Text, IntWritable, Text, Text>
     String handle_case_len = "";
     int sum = 0;
 
-    if (handle_case.indexOf("Crime Type") == -1) {
+    if (handle_case.indexOf("Crime Type") == -1) { 
       handle_case_len = items[2];
 
       for (IntWritable value : values) {
@@ -36,7 +36,7 @@ public class DataProfilingReducer extends Reducer<Text, IntWritable, Text, Text>
       String cm_amount = Integer.toString(sum);
       context.write(new Text(cm_type), new Text(cm_amount));
     }
-
+   
     if (handle_case.indexOf("Date") != -1) {
       String dt_type = "The amount of the data when the length of Date string is " + handle_case_len + ":";
       String dt_amount = Integer.toString(sum);

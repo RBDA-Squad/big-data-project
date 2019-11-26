@@ -5,7 +5,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class DataProfiling2 {
+public class LonLatToZipCode {
   public static void main(String[] args) throws Exception { 
     if (args.length != 2) {
       System.err.println("Usage: Crime Data <input path> <output path>");
@@ -13,15 +13,15 @@ public class DataProfiling2 {
     }
 
     Job job = new Job(); 
-    job.setJarByClass(DataProfiling2.class); 
-    job.setJobName("Process Crime Data Profiling 2");
+    job.setJarByClass(LonLatToZipCode.class); 
+    job.setJobName("Process Crime Data Longitude Latitude To Zip Code");
     job.setNumReduceTasks(1);
 
     FileInputFormat.addInputPath(job, new Path(args[0])); 
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
   
-    job.setMapperClass(DataProfilingMapper2.class);
-    job.setReducerClass(DataProfilingReducer2.class);
+    job.setMapperClass(LonLatToZipCodeMapper.class);
+    job.setReducerClass(LonLatToZipCodeReducer.class);
   
     job.setOutputKeyClass(Text.class); 
     job.setOutputValueClass(Text.class);
