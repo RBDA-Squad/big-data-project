@@ -24,6 +24,8 @@ TO-DO
 6. Check if the dataset is added successfully:
    hdfs dfs -cat /user/syc574/project/rows.csv
 
+<br>
+
 ### Data Cleaning Process
 
 1. Go to the `cd CrimeData/DataCleaning` directory
@@ -43,6 +45,8 @@ TO-DO
    ```
 7. Type `hdfs dfs -cat /user/syc574/FinalProject/output4/part-r-00000`, then you can see the final dataset after the cleaning process
 
+<br>
+
 ### Crime Data Schema:
 
 | Column name | Type   | Description                                  | Valid length |
@@ -55,6 +59,8 @@ TO-DO
 | Longitude   | Double | The longitude that the arrest take place.    | 10 - 13, 18  |
 | ZipCode     | String | The zip code that the arrest take place.     |              |
 
+<br>
+
 ### Phase 1 - The Crime Data Counts in each Zip Code area (for Analytics)
 
 1. Go to the `cd CrimeData/ZipCodeCount` directory
@@ -64,12 +70,16 @@ TO-DO
    ```
 3. Type `hdfs dfs -cat /user/syc574/FinalProject/output5/part-r-00000`, then you can see the Phase 1 data for our analytics
 
+<br>
+
 ### Phase 1 Data Schema:
 
 | Column name | Type    |
 | ----------- | ------- |
 | ZipCode     | String  |
 | CrimeCount  | Integer |
+
+<br>
 
 ### Phase 2 - The Crime Data Counts for each Crime Type in each Zip Code area (using Crime Type as the Columns)
 
@@ -79,6 +89,8 @@ TO-DO
    javac -classpath `yarn classpath` -d . ZipCodeCountMapper2.java; javac -classpath `yarn classpath` -d . ZipCodeCountReducer2.java; javac -classpath `yarn classpath`:. -d . ZipCodeCount2.java; jar -cvf ZipCodeCount2.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output6; hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/syc574/FinalProject/output4/part-r-00000 /user/syc574/FinalProject/output6
    ```
 3. Type `hdfs dfs -cat /user/syc574/FinalProject/output6/part-r-00000`, then you can see the Phase 2 data for our analytics
+
+<br>
 
 ### Phase 2 Data Schema:
 
@@ -136,10 +148,14 @@ TO-DO
 | THEFT-FRAUD                                 | String |
 | VEHICLE AND TRAFFIC LAWS                    | String |
 
+<br>
+
 ### Attemption for tunring Latitude and Longitude into Zip Code through Google Map API
 
 1. Python script is in `ZipCodeAPI/ZipCodeAPI.py`
 2. Java script is in `ZipCodeAPI/ZipCodeAPI.java`
+
+<br>
 
 ## Reference for Haversine formula (tunring Latitude and Longitude into Zip Code)
 
