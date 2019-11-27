@@ -2,7 +2,88 @@
 
 ## 311 Data:
 
-TO-DO
+### The Steps for 311 Dataset Ingest
+
+1. Login to Dumbo
+2. Download the dataset (csv format) through the URL:  
+   `curl -O https://nycopendata.socrata.com/api/views/erm2-nwe9/rows.csv?accessType=DOWNLOAD`
+3. Make a new directory in HDFS:  
+   `hdfs dfs -mkdir /user/<your netid>/project`
+4. Put the dataset file into HDFS:  
+   `hdfs dfs -put 311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project`
+
+<br>
+
+### Data Cleaning Process
+
+1. Go to the 311/cleaning directory. `cd 311/cleaning`
+2. Execute the below commands to clean the 311 dataset
+   ```
+   javac -classpath `yarn classpath` -d . CleaningMapper.java
+   javac -classpath `yarn classpath`:. -d . CleaningDriver.java
+   jar -cvf CleaningDriver.jar *.class
+   hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned
+   ```
+<br>
+
+### 311 Data Schema:
+
+| Column name      | Type   | Description                                     | Valid length |
+| ---------------- | ------ | ----------------------------------------------- | ------------ |
+| Time             | String | The time that the complaint took place          | 22           |
+| Complaint Type   | String | The type of complaint                           | 1 - 39       |
+| Zipcode          | String | The zipcode that the complaint fell in          | 1 - 43       |
+| Latitude         | Double | The latitude that the complaint took place      |              |
+| Longitude        | Double | The longitude that the complaint took place     |              |
+
+<br>
+
+### Phase 1 - The Complaint counts in each zipcode (for Analytics)
+
+1. Go to the directory. `cd 311/complaint_count_by_zipcode`
+2. Execute the below commands to generate the count of complaint by zipcode.
+   ```
+   javac -classpath `yarn classpath` -d . ZipcodeCountMapper.java
+   javac -classpath `yarn classpath` -d . ZipcodeCountReducer.java
+   javac -classpath `yarn classpath`:. -d . ZipcodeCountDriver.java
+   jar -cvf ZipcodeCountDriver.jar *.class
+   hadoop jar ZipcodeCountDriver.jar ZipcodeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_count_by_zipcode
+   ```
+
+<br>
+
+### Phase 1 Data Schema:
+
+| Column name | Type    |
+| ----------- | ------- |
+| Zipcode     | String  |
+| Count       | Long    |
+
+<br>
+
+### Phase 2 - The Complaint counts for each type in each zipcode (for Analytics)
+
+1. Go to the directory. `cd 311/complaint_types_count_by_zipcode`
+2. Execute the below commands to generate the count of complaint types by zipcode.
+   ```
+   javac -classpath `yarn classpath` -d . ComplaintTypeCountMapper.java
+   javac -classpath `yarn classpath` -d . ComplaintTypeCountReducer.java
+   javac -classpath `yarn classpath`:. -d . ComplaintTypeCountDriver.java
+   jar -cvf ComplaintTypeCountDriver.jar *.class
+   hadoop jar ComplaintTypeCountDriver.jar ComplaintTypeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_type_count_by_zipcode
+   ```
+
+<br>
+
+### Phase 2 Data Schema:
+
+| Column name      | Type   |
+| -----------------| ------ |
+| Zipcode          | String |
+| ComplaintType    | String |
+| Count            | String |
+<br>
+
 
 ## Restaurant Data:
 
