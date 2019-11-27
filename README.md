@@ -24,17 +24,17 @@
    jar -cvf CleaningDriver.jar *.class
    hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned
    ```
-<br>
+   <br>
 
 ### 311 Data Schema:
 
-| Column name      | Type   | Description                                     | Valid length |
-| ---------------- | ------ | ----------------------------------------------- | ------------ |
-| Time             | String | The time that the complaint took place          | 22           |
-| Complaint Type   | String | The type of complaint                           | 1 - 39       |
-| Zipcode          | String | The zipcode that the complaint fell in          | 1 - 43       |
-| Latitude         | Double | The latitude that the complaint took place      |              |
-| Longitude        | Double | The longitude that the complaint took place     |              |
+| Column name    | Type   | Description                                 | Valid length |
+| -------------- | ------ | ------------------------------------------- | ------------ |
+| Time           | String | The time that the complaint took place      | 22           |
+| Complaint Type | String | The type of complaint                       | 1 - 39       |
+| Zipcode        | String | The zipcode that the complaint fell in      | 1 - 43       |
+| Latitude       | Double | The latitude that the complaint took place  |              |
+| Longitude      | Double | The longitude that the complaint took place |              |
 
 <br>
 
@@ -54,10 +54,10 @@
 
 ### Phase 1 Data Schema:
 
-| Column name | Type    |
-| ----------- | ------- |
-| Zipcode     | String  |
-| Count       | Long    |
+| Column name | Type   |
+| ----------- | ------ |
+| Zipcode     | String |
+| Count       | Long   |
 
 <br>
 
@@ -77,13 +77,13 @@
 
 ### Phase 2 Data Schema:
 
-| Column name      | Type   |
-| -----------------| ------ |
-| Zipcode          | String |
-| ComplaintType    | String |
-| Count            | String |
-<br>
+| Column name   | Type   |
+| ------------- | ------ |
+| Zipcode       | String |
+| ComplaintType | String |
+| Count         | String |
 
+<br>
 
 ## Restaurant Data:
 
@@ -175,59 +175,59 @@ TO-DO
 
 ### Phase 2 Data Schema:
 
-| Column name                                 | Type   |
-| ------------------------------------------- | ------ |
-| ZIP CODE                                    | String |
-| ADMINISTRATIVE CODE                         | String |
-| ANTICIPATORY OFFENSES                       | String |
-| ARSON                                       | String |
-| ASSAULT 3 & RELATED OFFENSES                | String |
-| BURGLARY                                    | String |
-| CRIMINAL MISCHIEF & RELATED OFFENSES        | String |
-| CRIMINAL TRESPASS                           | String |
-| DANGEROUS DRUGS                             | String |
-| DANGEROUS WEAPONS                           | String |
-| DISORDERLY CONDUCT                          | String |
-| DISRUPTION OF A RELIGIOUS SERVICE           | String |
-| ENDAN WELFARE INCOMP                        | String |
-| F.C.A. P.I.N.O.S.                           | String |
-| FELONY ASSAULT                              | String |
-| FORCIBLE TOUCHING                           | String |
-| FORGERY                                     | String |
-| FRAUDS                                      | String |
-| FRAUDULENT                                  | String |
-| GAMBLING                                    | String |
-| GRAND LARCENY                               | String |
-| GRAND LARCENY OF MOTOR VEHICLE              | String |
-| HARRASSMENT 2                               | String |
-| HOMICIDE-NEGLIGENT-VEHICLE                  | String |
-| INTOXICATED & IMPAIRED DRIVING              | String |
-| KIDNAPPING & RELATED OFFENSES               | String |
-| LOITERING                                   | String |
-| MISCELLANEOUS PENAL LAW                     | String |
-| MOVING INFRACTIONS                          | String |
-| MURDER & NON-NEGL. MANSLAUGHTER             | String |
-| NEW YORK CITY HEALTH CODE                   | String |
-| NYS LAWS-UNCLASSIFIED FELONY                | String |
-| OFF. AGNST PUB ORD SENSBLTY & RGHTS TO PRIV | String |
-| OFFENSES AGAINST MARRIAGE UNCLASSIFIED      | String |
-| OFFENSES AGAINST PUBLIC ADMINISTRATION      | String |
-| OFFENSES AGAINST PUBLIC SAFETY              | String |
-| OFFENSES AGAINST THE PERSON                 | String |
-| OFFENSES INVOLVING FRAUD                    | String |
-| OFFENSES RELATED TO CHILDREN                | String |
-| OTHER OFFENSES RELATED TO THEFT             | String |
-| OTHER STATE LAWS                            | String |
-| OTHER STATE LAWS (NON PENAL LAW)            | String |
-| OTHER TRAFFIC INFRACTION                    | String |
-| PARKING OFFENSES                            | String |
-| PETIT LARCENY                               | String |
-| POSSESSION OF STOLEN PROPERTY 5             | String |
-| PROSTITUTION & RELATED OFFENSES             | String |
-| ROBBERY                                     | String |
-| SEX CRIMES                                  | String |
-| THEFT-FRAUD                                 | String |
-| VEHICLE AND TRAFFIC LAWS                    | String |
+| Column name                                 | Type    |
+| ------------------------------------------- | ------- |
+| ZIP CODE                                    | String  |
+| ADMINISTRATIVE CODE                         | Integer |
+| ANTICIPATORY OFFENSES                       | Integer |
+| ARSON                                       | Integer |
+| ASSAULT 3 & RELATED OFFENSES                | Integer |
+| BURGLARY                                    | Integer |
+| CRIMINAL MISCHIEF & RELATED OFFENSES        | Integer |
+| CRIMINAL TRESPASS                           | Integer |
+| DANGEROUS DRUGS                             | Integer |
+| DANGEROUS WEAPONS                           | Integer |
+| DISORDERLY CONDUCT                          | Integer |
+| DISRUPTION OF A RELIGIOUS SERVICE           | Integer |
+| ENDAN WELFARE INCOMP                        | Integer |
+| F.C.A. P.I.N.O.S.                           | Integer |
+| FELONY ASSAULT                              | Integer |
+| FORCIBLE TOUCHING                           | Integer |
+| FORGERY                                     | Integer |
+| FRAUDS                                      | Integer |
+| FRAUDULENT                                  | Integer |
+| GAMBLING                                    | Integer |
+| GRAND LARCENY                               | Integer |
+| GRAND LARCENY OF MOTOR VEHICLE              | Integer |
+| HARRASSMENT 2                               | Integer |
+| HOMICIDE-NEGLIGENT-VEHICLE                  | Integer |
+| INTOXICATED & IMPAIRED DRIVING              | Integer |
+| KIDNAPPING & RELATED OFFENSES               | Integer |
+| LOITERING                                   | Integer |
+| MISCELLANEOUS PENAL LAW                     | Integer |
+| MOVING INFRACTIONS                          | Integer |
+| MURDER & NON-NEGL. MANSLAUGHTER             | Integer |
+| NEW YORK CITY HEALTH CODE                   | Integer |
+| NYS LAWS-UNCLASSIFIED FELONY                | Integer |
+| OFF. AGNST PUB ORD SENSBLTY & RGHTS TO PRIV | Integer |
+| OFFENSES AGAINST MARRIAGE UNCLASSIFIED      | Integer |
+| OFFENSES AGAINST PUBLIC ADMINISTRATION      | Integer |
+| OFFENSES AGAINST PUBLIC SAFETY              | Integer |
+| OFFENSES AGAINST THE PERSON                 | Integer |
+| OFFENSES INVOLVING FRAUD                    | Integer |
+| OFFENSES RELATED TO CHILDREN                | Integer |
+| OTHER OFFENSES RELATED TO THEFT             | Integer |
+| OTHER STATE LAWS                            | Integer |
+| OTHER STATE LAWS (NON PENAL LAW)            | Integer |
+| OTHER TRAFFIC INFRACTION                    | Integer |
+| PARKING OFFENSES                            | Integer |
+| PETIT LARCENY                               | Integer |
+| POSSESSION OF STOLEN PROPERTY 5             | Integer |
+| PROSTITUTION & RELATED OFFENSES             | Integer |
+| ROBBERY                                     | Integer |
+| SEX CRIMES                                  | Integer |
+| THEFT-FRAUD                                 | Integer |
+| VEHICLE AND TRAFFIC LAWS                    | Integer |
 
 <br>
 
@@ -238,7 +238,17 @@ TO-DO
 
 <br>
 
-## Reference for Haversine formula (tunring Latitude and Longitude into Zip Code)
+## Reference for Haversine formula (turning Latitude and Longitude into Zip Code)
 
 - https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
 - https://king39461.pixnet.net/blog/post/400140310-java-%E5%B7%B2%E7%9F%A5%E5%85%A9%E5%80%8B%E5%9C%B0%E9%BB%9E%E7%B6%93%E7%B7%AF%E5%BA%A6%E7%AE%97%E8%B7%9D%E9%9B%A2%EF%BC%88%E9%9D%9E%E5%B8%B8%E7%B2%BE%E7%A2%BA%EF%BC%89
+
+<br>
+
+## The evidence of the high charge for using Google Map API
+
+![pic1](pic1.png)
+
+<br>
+
+![pic2](pic2.png)
