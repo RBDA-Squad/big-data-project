@@ -1,0 +1,30 @@
+NUMBER OF RECORDS (RESTAURANTS): 395047
+COLUMNS (FIELDS):
+	CAMIS:
+		TYPE: STRING
+		DESCRIPTION: Unique identifier for the restaurant.
+		VALID_STRING_LENGTH := 8
+
+	BORO:
+		TYPE: STRING
+		DESCRIPTION: Borough of restaurant location.
+		VALID_VALUES := {Bronx, Brooklyn, Manhattan, Queens, Staten Island}
+		NUM_OF_RESTAURANT_PER_BORO := { Bronx: 35993,
+					        Brooklyn: 100327,
+						Manhattan: 155010,
+						Queens: 90473,
+						Staten Island: 13130}
+	
+	CUISINE:
+		TYPE: STRING
+		DESCRIPTION: Restaurant cuisine.
+
+	LATITUDE:
+		TYPE: DOUBLE
+		DESCRIPTION: Restaurant latitude.
+		VALID_STRING_LENGTH := {12, 13, 14, 15}
+	
+	LONGITUDE:
+		TYPE: DOUBLE
+		DESCRIPTION: Restaurant longitude.
+		VALID_STRING_LENGTH := {12, 13, 14, 15, 16}

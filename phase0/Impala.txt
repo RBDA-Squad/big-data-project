@@ -1,0 +1,212 @@
+#######################################################################
+Column fields
+0	CAMIS STRING COMMENT '8-digit unique identifier',
+1	DBA STRING COMMENT 'Restaurant name',
+2	BORO STRING,
+3	BUILDING STRING,
+4	STREET STRING,
+5	ZIPCODE STRING COMMENT '5-digit code',
+6	PHONE STRING,
+7	CUISINE STRING,
+8	INSPECTION_DATE STRING COMMENT 'MONTH/DAY/YEAR',
+9	ACTION STRING,
+10	VIOLATION_CODE STRING,
+11 	VIOLATION_DESCRIPTION STRING,
+12 	CRITICAL_FLAG STRING,
+13	SCORE STRING,
+14	GRADE STRING,
+15	GRADE_DATE STRING COMMENT 'MONTH/DAY/YEAR',
+16	RECORD_DATE STRING COMMENT 'MONTH/	DAY/YEAR',
+17	INSPECTION_TYPE STRING,
+18	LATITUDE STRING,
+19	LONGITUDE STRING,
+20	COMMUNITY_BOARD STRING,
+21	COUNCIL_DISTRICT STRING,
+22	CENSUS_TRACT STRING,
+23	BIN STRING,
+24	BBL STRING,
+25	NTA STRING
+#######################################################################
+CREATE EXTERNAL TABLE rts_raw(
+CAMIS STRING COMMENT '8-digit unique identifier',
+DBA STRING COMMENT 'Restaurant name',
+BORO STRING,
+BUILDING STRING,
+STREET STRING,
+ZIPCODE STRING COMMENT '5-digit code',
+PHONE STRING,
+CUISINE STRING,
+INSPECTION_DATE STRING COMMENT 'MONTH/DAY/YEAR',
+ACTION STRING,
+VIOLATION_CODE STRING,
+VIOLATION_DESCRIPTION STRING,
+CRITICAL_FLAG STRING,
+SCORE STRING,
+GRADE STRING,
+GRADE_DATE STRING COMMENT 'MONTH/DAY/YEAR',
+RECORD_DATE STRING COMMENT 'MONTH/	DAY/YEAR',
+INSPECTION_TYPE STRING,
+LATITUDE STRING,
+LONGITUDE STRING,
+COMMUNITY_BOARD STRING,
+COUNCIL_DISTRICT STRING,
+CENSUS_TRACT STRING,
+BIN STRING,
+BBL STRING,
+NTA STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION "/user/jl11046/Final/input/";
+
+ALTER TABLE rts_raw SET TBLPROPERTIES("skip.header.line.count"="1");
+#######################################################################
+-- CAMIS *
+select distinct length(camis) from rts_raw;
+=> Length = 8
+
+select max(camis) from rts_raw;
+=> max = 50100371
+
+select min(camis) from rts_raw;
+=> min = 30075445
+
+-- DBA
+select count(dba) from rts_raw where dba = '';
+=> number of empty DBA = 655 
+
+select max(length(dba)) from rts_raw;
+=> max length = 90
+
+select min(length(dba)) from rts_raw;
+=> min length = 0
+ 
+create table dba_length_histogram as
+select length(dba) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+=> new table dba_length_histogram
+
+-- BORO *
+select distinct boro from rts_raw;
+=> {Brooklyn, Staten Island, Manhattan, Queens, 0, Bronx}
+
+select count(*) from rts_raw where boro='0';
+=> 0 *** need cleaning ***
+
+create table boro_histogram as
+select boro, count(*) as num
+from rts_raw
+where boro <> '0'
+group by boro
+order by boro;
+
+-- BUILDING
+select length(building) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+
+-- STREET
+select length(street) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+
+-- ZIPCODE 
+select length(zipcode) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+
+select count(*) from rts_raw
+where zipcode = '';
+=> 5559
+
+-- PHONE 
+select length(phone) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+=> outliers: length = 0, 5, 9, 11, 12 
+
+-- CUISINE *
+select length(cuisine) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+
+select distinct cuisine from rts_raw order by cuisine;
+
+-- INSPECTION_DATE
+
+-- ACTION
+
+-- VIOLATION_CODE
+
+-- VIOLATION_DESCRIPTION
+
+-- CRITICAL_FLAG
+
+-- SCORE
+
+-- GRADE
+select grade, count(*)
+from rts_raw
+group by grade;
+
+create table grade_histogram as
+select grade, count(*) as num
+from rts_raw
+where grade <> ''
+group by grade
+order by grade;
+
+-- GRADE_DATE
+
+-- RECORD_DATE
+
+-- INSPECTION_TYPE
+
+-- LATITUDE *
+select length(latitude) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+=> (len, num)
+   (0, 429)
+   (1, 5559)
+......
+
+-- LONGITUDE *
+select length(longitude) as len, count(*) as num
+from rts_raw
+group by len
+order by len;
+=> (len, num)
+   (0, 429)
+   (1, 5559)
+
+-- COMMUNITY_BOARD
+
+-- COUNCIL_DISTRICT
+
+-- CENSUS_TRACT
+
+-- BIN
+
+-- BBL
+
+-- NTA
+
+
+--- version 0 ---
+CAMIS
+BORO
+CUISINE
+LATITUDE
+LONGITUDE
+
+create table rst_v0 as
+select camis, boro, cuisine, latitude, longitude
+from rts_raw
+where boro <> '0' and length(latitude) > 1 and length(longitude) > 1;
