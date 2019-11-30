@@ -1,0 +1,4 @@
+use jl11046;
+
+select cuisine, count(distinct camis) as cnt from rts_raw group by cuisine order by cnt DESC;
+

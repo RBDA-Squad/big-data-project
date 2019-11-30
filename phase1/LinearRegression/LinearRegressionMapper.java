@@ -16,11 +16,11 @@ public class LinearRegressionMapper
             String zipCode = columns[0];
             String rtsCount = columns[1];
             String cpsCount = columns[2];
-            //String cmsCount = columns[3];
+            String cmsCount = columns[3];
             
             context.write(new Text("rts->cps"), new Text(rtsCount + "\t" + cpsCount));
-            //context.write(new Text("rts->cms"), new Text(rtsCount + "\t" + cmsCount));
-            //context.write(new Text("cps->cms"), new Text(cpsCount + "\t" + cmsCount));
+            context.write(new Text("rts->cms"), new Text(rtsCount + "\t" + cmsCount));
+            context.write(new Text("cps->cms"), new Text(cpsCount + "\t" + cmsCount));
         }
 }      
             

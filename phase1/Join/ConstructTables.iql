@@ -16,3 +16,8 @@ where length(zipcode) = 5
 group by zipcode
 order by zipcode;
 
+CREATE EXTERNAL TABLE crime_phase1(
+ZIPCODE STRING,
+num_of_cms STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION "/user/jl11046/Final/phase1/Join/input/crime";

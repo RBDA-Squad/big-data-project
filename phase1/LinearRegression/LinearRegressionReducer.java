@@ -25,7 +25,7 @@ public class LinearRegressionReducer
             int y = Integer.parseInt(fields[1]);
             sr.addData(x, y);
         }
-        String stat = String.valueOf(sr.getSlope()) + "\t" + String.valueOf(sr.getIntercept()) + "\t" + String.valueOf(sr.getSignificance());
+        String stat = String.join("\t", String.valueOf(sr.getSlope()), String.valueOf(sr.getIntercept()), String.valueOf(sr.getRSquare()), String.valueOf(sr.getSumSquaredErrors()), String.valueOf(sr.getSignificance()));
          context.write(key, new Text(stat));
     }
 }
