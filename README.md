@@ -162,18 +162,18 @@ TO-DO
 
 <br>
 
-### Phase 2 - The Crime Data Counts for each Crime Type in each Zip Code area (using Crime Type as the Columns)
+### Phase 2-1 - The Crime Data Counts for each Crime Type in each Zip Code area (using Crime Type as the Columns)
 
 1. Go to the `cd CrimeData/ZipCodeCount2` directory
 2. Execute the below commands to get the Crime Data Counts for each Crime Type in each Zip Code area
    ```
    javac -classpath `yarn classpath` -d . ZipCodeCountMapper2.java; javac -classpath `yarn classpath` -d . ZipCodeCountReducer2.java; javac -classpath `yarn classpath`:. -d . ZipCodeCount2.java; jar -cvf ZipCodeCount2.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output6; hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/syc574/FinalProject/output4/part-r-00000 /user/syc574/FinalProject/output6
    ```
-3. Type `hdfs dfs -cat /user/syc574/FinalProject/output6/part-r-00000`, then you can see the Phase 2 data for our analytics
+3. Type `hdfs dfs -cat /user/syc574/FinalProject/output6/part-r-00000`, then you can see the Phase 2-1 data for our analytics
 
 <br>
 
-### Phase 2 Data Schema:
+### Phase 2-1 Data Schema:
 
 | Column name                                 | Type    |
 | ------------------------------------------- | ------- |
@@ -228,6 +228,27 @@ TO-DO
 | SEX CRIMES                                  | Integer |
 | THEFT-FRAUD                                 | Integer |
 | VEHICLE AND TRAFFIC LAWS                    | Integer |
+
+<br>
+
+### Phase 2-2 - The Crime Data Counts for each Crime Type in each Zip Code area
+
+1. Go to the `cd CrimeData/ZipCodeCount3` directory
+2. Execute the below commands to get the Crime Data Counts for each Crime Type in each Zip Code area
+   ```
+   javac -classpath `yarn classpath` -d . ZipCodeCountMapper3.java; javac -classpath `yarn classpath` -d . ZipCodeCountReducer3.java; javac -classpath `yarn classpath`:. -d . ZipCodeCount3.java; jar -cvf ZipCodeCount3.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output7; hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/syc574/FinalProject/output4/part-r-00000 /user/syc574/FinalProject/output7
+   ```
+3. Type `hdfs dfs -cat /user/syc574/FinalProject/output7/part-r-00000`, then you can see the Phase 2-2 data for our analytics
+
+<br>
+
+### Phase 2-2 Data Schema:
+
+| Column name | Type    |
+| ----------- | ------- |
+| ZipCode     | String  |
+| CrimeType   | String  |
+| CrimeCount  | Integer |
 
 <br>
 
