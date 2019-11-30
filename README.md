@@ -259,14 +259,14 @@ TO-DO
 
 <br>
 
-## Reference for Haversine formula (turning Latitude and Longitude into Zip Code)
+### Reference for Haversine formula (turning Latitude and Longitude into Zip Code)
 
 - https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
 - https://king39461.pixnet.net/blog/post/400140310-java-%E5%B7%B2%E7%9F%A5%E5%85%A9%E5%80%8B%E5%9C%B0%E9%BB%9E%E7%B6%93%E7%B7%AF%E5%BA%A6%E7%AE%97%E8%B7%9D%E9%9B%A2%EF%BC%88%E9%9D%9E%E5%B8%B8%E7%B2%BE%E7%A2%BA%EF%BC%89
 
 <br>
 
-## The evidence of the high charge for using Google Map API
+### The evidence of the high charge for using Google Map API
 
 ![pic1](pic1.png)
 
