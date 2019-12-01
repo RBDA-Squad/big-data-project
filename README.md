@@ -22,10 +22,10 @@
 3. Make a new directory in HDFS.  
    `hdfs dfs -mkdir /user/<your netid>/project/dataset`
 4. Put the dataset file into HDFS.  
-    `hdfs dfs -put rst.tsv /user/<your netid>/project/dataset`
+   `hdfs dfs -put rst.tsv /user/<your netid>/project/dataset`
 
-   or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.  
-   `./data_ingest/restaurant_data/DataIngest.sh`
+or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.  
+`./data_ingest/restaurant_data/DataIngest.sh`
 
 <br>
 
@@ -82,7 +82,7 @@
 
 1. Go to the directory.  
    `cd etl_code/311_data/data_cleaning`
-2. Clean the 311 dataset.
+2. Clean the 311 dataset.  
    `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
 
 <br>
@@ -103,7 +103,7 @@
 
 1. Go to the directory.  
    `cd etl_code/311_data/complaint_count_by_zipcode`
-2. Generate the count of complaint by zipcode.
+2. Generate the count of complaint by zipcode.  
    `hadoop jar ZipcodeCountDriver.jar ZipcodeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_count_by_zipcode`
 
 <br>
@@ -121,7 +121,7 @@
 
 1. Go to the directory.  
    `cd etl_code/311_data/complaint_types_count_by_zipcode`
-2. Generate the count of complaint types by zipcode.
+2. Generate the count of complaint types by zipcode.  
    `hadoop jar ComplaintTypeCountDriver.jar ComplaintTypeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_type_count_by_zipcode`
 
 <br>
@@ -151,36 +151,13 @@
 
 ### Restaurant Data Schema
 
-COLUMNS:
-
-    CAMIS:
-        TYPE: STRING
-        DESCRIPTION: Unique identifier for the restaurant.
-        VALID_STRING_LENGTH := 8
-
-    BORO:
-        TYPE: STRING
-        DESCRIPTION: Borough of restaurant location.
-        VALID_VALUES := {Bronx, Brooklyn, Manhattan, Queens, Staten Island}
-        NUM_OF_RESTAURANT_PER_BORO := { Bronx: 35993,
-                        Brooklyn: 100327,
-                        Manhattan: 155010,
-                        Queens: 90473,
-                        Staten Island: 13130}
-
-    CUISINE:
-        TYPE: STRING
-        DESCRIPTION: Restaurant cuisine.
-
-    LATITUDE:
-        TYPE: DOUBLE
-        DESCRIPTION: Restaurant latitude.
-        VALID_STRING_LENGTH := {12, 13, 14, 15}
-
-    LONGITUDE:
-        TYPE: DOUBLE
-        DESCRIPTION: Restaurant longitude.
-        VALID_STRING_LENGTH := {12, 13, 14, 15, 16}
+| Column name | Type   | Description                           | Valid length |
+| ----------- | ------ | ------------------------------------- | ------------ |
+| CAMIS       | String | Unique identifier for the restaurant. | 8            |
+| BORO        | String | Borough of restaurant location.       |              |
+| CUISINE     | String | Restaurant cuisine.                   |              |
+| LATITUDE    | Double | Restaurant latitude.                  | 12 - 15      |
+| LONGITUDE   | Double | Restaurant longitude.                 | 12 - 16      |
 
 <br>
 
@@ -312,9 +289,9 @@ COLUMNS:
 
 | Column name | Type   | Description                                  | Valid length |
 | ----------- | ------ | -------------------------------------------- | ------------ |
-| CrimeID     | String | The unique identifier for each crime record. | 9 - 10       |
+| Crime ID    | String | The unique identifier for each crime record. | 9 - 10       |
 | Date        | String | The date that the arrest take place.         | 10           |
-| CrimeType   | String | The type of crime.                           | 1 - 43       |
+| Crime Type  | String | The type of crime.                           | 1 - 43       |
 | Borough     | String | The borough that the arrest take place.      |              |
 | Latitude    | Double | The latitude that the arrest take place.     | 17 - 18      |
 | Longitude   | Double | The longitude that the arrest take place.    | 10 - 13, 18  |
