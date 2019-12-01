@@ -1,0 +1,23 @@
+use jl11046;
+
+create table rts_phase2_raw as
+select zipcode, cuisine, count(distinct camis) as num_of_rts
+from rts_raw
+where zipcode not in ("N/A", "NULL", "")
+group by zipcode, cuisine
+order by zipcode, cuisine;
+
+CREATE EXTERNAL TABLE 311_phase2_raw(
+ZIPCODE STRING,
+CP_TYPE STRING,
+NUM_OF_CPS BIGINT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION "/user/jl11046/Final/phase2/Join/input/311";
+
+CREATE EXTERNAL TABLE crime_phase2_raw(
+ZIPCODE STRING,
+CM_TYPE STRING,
+NUM_OF_CMS BIGINT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION "/user/jl11046/Final/phase2/Join/input/crime";
+

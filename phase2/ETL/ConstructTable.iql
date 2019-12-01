@@ -1,8 +1,0 @@
-use jl11046;
-
-create table rts_phase2 as
-select zipcode, cuisine, count(distinct camis) as num_of_rts
-from rts_raw
-where zipcode not in ("N/A", "NULL", "")
-group by zipcode, cuisine
-order by zipcode, cuisine;
