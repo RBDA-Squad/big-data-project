@@ -58,7 +58,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 1. Go to the directory.  
    `cd etl_code/311_data/data_cleaning`
 2. Clean the 311 dataset.  
-   `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
+   \ `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
 
 <br>
 
@@ -442,7 +442,3 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 <br>
 
 ![rm2](screenshots/rm2.png)
-
-<br><br>
-
-## Analytics
