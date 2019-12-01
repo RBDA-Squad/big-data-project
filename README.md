@@ -268,8 +268,8 @@ TO-DO
 
 ### The evidence of the high charge for using Google Map API
 
-![pic1](pic1.png)
+![rm1](screenshots/rm1.png)
 
 <br>
 
-![pic2](pic2.png)
+![rm2](screenshots/rm2.png)

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ZipCodeCountReducer2 extends Reducer<Text, Text, Text, Text> {
+public class ZipCodeCountReducer3 extends Reducer<Text, Text, Text, Text> {
   @Override
   public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
     int[] items = new int[50]; 

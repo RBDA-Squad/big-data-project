@@ -6,7 +6,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ZipCodeCountReducer3 extends Reducer<Text, Text, Text, Text> {
+public class ZipCodeCountReducer2 extends Reducer<Text, Text, Text, Text> {
   @Override
   public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
     int count = 0;

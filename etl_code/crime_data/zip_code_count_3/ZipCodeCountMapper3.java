@@ -10,7 +10,6 @@ public class ZipCodeCountMapper3 extends Mapper<LongWritable, Text, Text, Text> 
     String line = value.toString();
 
     String[] items = line.split(","); 
-    String new_key = items[6] + "," + items[2];
-    context.write(new Text(new_key), value);
+    context.write(new Text(items[6]), new Text(items[2]));
   }
 }
