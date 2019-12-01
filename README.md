@@ -16,7 +16,8 @@
 
 ### The Steps of 311 Data Cleaning
 
-1. Go to the 311/cleaning directory. `cd 311/cleaning`
+1. Go to the 311/cleaning directory.  
+   `cd 311/cleaning`
 2. Clean the 311 dataset.
    ```
    javac -classpath `yarn classpath` -d . CleaningMapper.java
@@ -41,7 +42,8 @@
 
 ### Phase 1 - Count the complaint data for different zip code's areas (analytics purpose)
 
-1. Go to the directory. `cd 311/complaint_count_by_zipcode`
+1. Go to the directory.  
+   `cd 311/complaint_count_by_zipcode`
 2. Generate the count of complaint by zipcode.
    ```
    javac -classpath `yarn classpath` -d . ZipcodeCountMapper.java
@@ -64,7 +66,8 @@
 
 ### Phase 2 - Count the complaint data for different complaint types in each zip code area (analytics purpose)
 
-1. Go to the directory. `cd 311/complaint_types_count_by_zipcode`
+1. Go to the directory.  
+   `cd 311/complaint_types_count_by_zipcode`
 2. Generate the count of complaint types by zipcode.
    ```
    javac -classpath `yarn classpath` -d . ComplaintTypeCountMapper.java
@@ -122,23 +125,24 @@
 
 ### The Steps of Crime Data Ingest
 
-1. Login to Dumbo
-2. Download the dataset (csv format) through the URL:
+1. Login to Dumbo.
+2. Download the dataset (csv format) through the URL.  
    `curl -O https://data.cityofnewyork.us/api/views/8h9b-rp9u/rows.csv?accessType=DOWNLOAD`
-3. Change the file name to a shorter one:
+3. Change the file name to a shorter one.  
    `mv rows.csv?accessType=DOWNLOAD rows.csv`
-4. Make a new directory in HDFS:
+4. Make a new directory in HDFS.  
    `hdfs dfs -mkdir /user/<your netid>/project`
-5. Put the dataset file into HDFS:
+5. Put the dataset file into HDFS.  
    `hdfs dfs -put rows.csv /user/<your netid>/project`
-6. Check if the dataset was added successfully:
+6. Check if the dataset was added successfully.  
    `hdfs dfs -cat /user/<your netid>/project/rows.csv`
 
 <br>
 
 ### The Steps of Crime Data Cleaning
 
-1. Go to the directory. `cd etl_code/crime_data/data_cleaning`
+1. Go to the directory.  
+   `cd etl_code/crime_data/data_cleaning`
 2. Clean the Crime dataset.
    ```
    javac -classpath`yarn classpath`-d . DataCleaningMapper.java;
@@ -148,7 +152,8 @@
    hdfs dfs -rm -r /user/<your netid>/project/output1;
    hadoop jar DataCleaning.jar DataCleaning /user/<your netid>/project/rows.csv /user/<your netid>/project/output1
    ```
-3. Go to the directory. `cd etl_code/crime_data/zip_code_table`
+3. Go to the directory.  
+   `cd etl_code/crime_data/zip_code_table`
 4. Generate the Zip Code matching table.
    ```
    javac -classpath `yarn classpath` -d . ZipCodeTableMapper.java;
@@ -158,7 +163,8 @@
    hdfs dfs -rm -r /user/<your netid>/project/output2;
    hadoop jar ZipCodeTable.jar ZipCodeTable /user/<your netid>/project/zipcode.csv /user/<your netid>/project/output2
    ```
-5. Go to the directory. `cd etl_code/crime_data/lon_lat_to_zip_code`
+5. Go to the directory.  
+   `cd etl_code/crime_data/lon_lat_to_zip_code`
 6. Turn Latitude and Longitude into Zip Code.
    ```
    javac -classpath `yarn classpath` -d . LonLatToZipCodeMapper.java;
@@ -168,7 +174,8 @@
    hdfs dfs -rm -r /user/<your netid>/project/output3;
    hadoop jar LonLatToZipCode.jar LonLatToZipCode /user/<your netid>/project/output1/part-r-00000 /user/<your netid>/project/output3
    ```
-7. Check the final dataset after the cleaning process `hdfs dfs -cat /user/<your netid>/project/output3/part-r-00000`
+7. Check the final dataset after the cleaning process.  
+   `hdfs dfs -cat /user/<your netid>/project/output3/part-r-00000`
 
 <br>
 
@@ -188,7 +195,8 @@
 
 ### Phase 1 - Count the crime data for different zip code's areas (analytics purpose)
 
-1. Go to the directory. `cd etl_code/crime_data/zip_code_count_1`
+1. Go to the directory.  
+   `cd etl_code/crime_data/zip_code_count_1`
 2. Count Crime Data in each Zip Code area.
    ```
    javac -classpath `yarn classpath` -d . ZipCodeCountMapper.java;
@@ -198,7 +206,8 @@
    hdfs dfs -rm -r /user/<your netid>/project/output4;
    hadoop jar ZipCodeCount.jar ZipCodeCount /user/<your netid>/project/output3/part-r-00000 /user/<your netid>/project/output4
    ```
-3. Check the Phase 1 data for analytics. `hdfs dfs -cat /user/syc574/FinalProject/output4/part-r-00000`
+3. Check the Phase 1 data for analytics.  
+   `hdfs dfs -cat /user/syc574/FinalProject/output4/part-r-00000`
 
 <br>
 
@@ -213,7 +222,8 @@
 
 ### Phase 2 - Count the crime data for different crime types in each zip code area (analytics purpose)
 
-1. Go to the directory. `cd etl_code/crime_data/zip_code_count_2`
+1. Go to the directory.  
+   `cd etl_code/crime_data/zip_code_count_2`
 2. Count Crime Data for each Crime Type in each Zip Code area.
    ```
    javac -classpath `yarn classpath` -d . ZipCodeCountMapper2.java;
@@ -223,7 +233,8 @@
    hdfs dfs -rm -r /user/<your netid>/project/output5;
    hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/<your netid>/project/output3/part-r-00000 /user/<your netid>/project/output5
    ```
-3. Check the Phase 2 data for analytics. `hdfs dfs -cat /user/<your netid>/project/output5/part-r-00000`
+3. Check the Phase 2 data for analytics.  
+   `hdfs dfs -cat /user/<your netid>/project/output5/part-r-00000`
 
 <br>
 
@@ -239,8 +250,9 @@
 
 ### Phase 3 - Count the crime data for different crime types in each zip code area (crime type as a column) (analytics purpose)
 
-1. Go to the directory. `cd etl_code/crime_data/zip_code_count_3`
-2. Get the Crime Data Counts for each Crime Type in each Zip Code area
+1. Go to the directory.  
+   `cd etl_code/crime_data/zip_code_count_3`
+2. Get the Crime Data Counts for each Crime Type in each Zip Code area.
    ```
    javac -classpath `yarn classpath` -d . ZipCodeCountMapper3.java;
    javac -classpath `yarn classpath` -d . ZipCodeCountReducer3.java;
@@ -249,7 +261,8 @@
    hdfs dfs -rm -r /user/user/<your netid>/output6;
    hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/user/<your netid>/output3/part-r-00000 /user/user/<your netid>/output6
    ```
-3. Check the Phase 3 data for our analytics `hdfs dfs -cat /user/user/<your netid>/output6/part-r-00000`
+3. Check the Phase 3 data for our analytics.  
+   `hdfs dfs -cat /user/user/<your netid>/output6/part-r-00000`
 
 <br>
 
@@ -313,8 +326,10 @@
 
 ### The attempts for turning latitude and longitude into zip code through Google Map API
 
-1. Python script is in the following path: `ZipCodeAPI/ZipCodeAPI.py`
-2. Java script is in the following path: `ZipCodeAPI/ZipCodeAPI.java`
+1. Python script is in the following path:  
+   `ZipCodeAPI/ZipCodeAPI.py`
+2. Java script is in the following path:  
+   `ZipCodeAPI/ZipCodeAPI.java`
 
 <br>
 
