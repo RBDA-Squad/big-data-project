@@ -43,33 +43,6 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 <br><br>
 
-## Data Profiling Stage
-
-### The Steps of 311 Data Profiling
-
-<br>
-
-### The Steps of Restaurant Data Profiling
-
-<br>
-
-### The Steps of Crime Data Profiling
-
-1. Go to the directory.  
-   `cd profiling_code/crime_code/data_profiling_1`
-2. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/dp_1_output;`
-3. Profile the crime dataset.  
-   `hadoop jar DataProfiling.jar DataProfiling /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_1_output`
-4. Go to the directory.  
-   `cd profiling_code/crime_code/data_profiling_2`
-5. Remove the output folder if it exists.
-   `hdfs dfs -rm -r /user/<your netid>/project/dp_2_output`
-6. Profile the crime dataset.
-   `hadoop jar DataProfiling2.jar DataProfiling2 /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_2_output`
-
-<br><br>
-
 ## ETL Stage
 
 <br>
@@ -413,7 +386,36 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 | THEFT-FRAUD                                 | Integer |
 | VEHICLE AND TRAFFIC LAWS                    | Integer |
 
+<br><br>
+
+## Data Profiling Stage
+
+### The Steps of 311 Data Profiling
+
 <br>
+
+### The Steps of Restaurant Data Profiling
+
+<br>
+
+### The Steps of Crime Data Profiling
+
+1. Go to the directory.  
+   `cd profiling_code/crime_code/data_profiling_1`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/dp_1_output`
+3. Profile the crime dataset.  
+   `hadoop jar DataProfiling.jar DataProfiling /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_1_output`
+4. Go to the directory.  
+   `cd profiling_code/crime_code/data_profiling_2`
+5. Remove the output folder if it exists.
+   `hdfs dfs -rm -r /user/<your netid>/project/dp_2_output`
+6. Profile the crime dataset for checking the crime type characteristics.
+   `hadoop jar DataProfiling2.jar DataProfiling2 /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_2_output`
+
+<br><br>
+
+## Others
 
 ### The attempts for turning latitude and longitude into zip code through Google Map API
 
