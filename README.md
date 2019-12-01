@@ -1,10 +1,10 @@
 # Realtime Big Data - Final Project
 
-## 311 Data:
+## 311 Data
 
-### The Steps for 311 Dataset Ingest
+### 311 Data Ingest Process
 
-1. Login to Dumbo
+1. Login to Dumbo.
 2. Download the dataset (csv format) through the URL:  
    `curl -O https://nycopendata.socrata.com/api/views/erm2-nwe9/rows.csv?accessType=DOWNLOAD`
 3. Make a new directory in HDFS:  
@@ -14,10 +14,10 @@
 
 <br>
 
-### Data Cleaning Process
+### 311 Data Cleaning Process
 
 1. Go to the 311/cleaning directory. `cd 311/cleaning`
-2. Execute the below commands to clean the 311 dataset
+2. Clean the 311 dataset.
    ```
    javac -classpath `yarn classpath` -d . CleaningMapper.java
    javac -classpath `yarn classpath`:. -d . CleaningDriver.java
@@ -26,7 +26,7 @@
    ```
    <br>
 
-### 311 Data Schema:
+### 311 Data Schema
 
 | Column name    | Type   | Description                                 | Valid length |
 | -------------- | ------ | ------------------------------------------- | ------------ |
@@ -41,7 +41,7 @@
 ### Phase 1 - The Complaint counts in each zipcode (for Analytics)
 
 1. Go to the directory. `cd 311/complaint_count_by_zipcode`
-2. Execute the below commands to generate the count of complaint by zipcode.
+2. Generate the count of complaint by zipcode.
    ```
    javac -classpath `yarn classpath` -d . ZipcodeCountMapper.java
    javac -classpath `yarn classpath` -d . ZipcodeCountReducer.java
@@ -52,7 +52,7 @@
 
 <br>
 
-### Phase 1 Data Schema:
+### 311 Data Schema (phase 1 analytics)
 
 | Column name | Type   |
 | ----------- | ------ |
@@ -61,10 +61,10 @@
 
 <br>
 
-### Phase 2 - The Complaint counts for each type in each zipcode (for Analytics)
+### Phase 2 - The Complaint counts for each type in each zipcode (for analytics)
 
 1. Go to the directory. `cd 311/complaint_types_count_by_zipcode`
-2. Execute the below commands to generate the count of complaint types by zipcode.
+2. Generate the count of complaint types by zipcode.
    ```
    javac -classpath `yarn classpath` -d . ComplaintTypeCountMapper.java
    javac -classpath `yarn classpath` -d . ComplaintTypeCountReducer.java
@@ -75,7 +75,7 @@
 
 <br>
 
-### Phase 2 Data Schema:
+### 311 Data Schema (Phase 2 Analytics)
 
 | Column name   | Type   |
 | ------------- | ------ |
@@ -85,50 +85,93 @@
 
 <br>
 
-## Restaurant Data:
+## Restaurants Data
 
-TO-DO
+<br>
 
-## Crime Data:
+### Restaurants Data Ingest Process
 
-### The Steps for Crime Dataset Ingest
+<br>
+
+### Restaurants Data Cleaning Process
+
+<br>
+
+### Restaurants Data Schema
+
+<br>
+
+### Phase 1 - The Restaurants Data Counts in each Zip Code area (for analytics)
+
+<br>
+
+### Restaurants Data Schema (phase 1 analytics)
+
+<br>
+
+### Phase 2 - The Restaurants Data Counts for each Crime Type in each Zip Code area
+
+<br>
+
+### Restaurants Data Schema (phase 2 analytics)
+
+<br>
+
+## Crimes Data
+
+### Crimes Data Ingest Process
 
 1. Login to Dumbo
 2. Download the dataset (csv format) through the URL:
-   curl -O https://data.cityofnewyork.us/api/views/8h9b-rp9u/rows.csv?accessType=DOWNLOAD
+   `curl -O https://data.cityofnewyork.us/api/views/8h9b-rp9u/rows.csv?accessType=DOWNLOAD`
 3. Change the file name to a shorter one:
-   mv rows.csv?accessType=DOWNLOAD rows.csv
+   `mv rows.csv?accessType=DOWNLOAD rows.csv`
 4. Make a new directory in HDFS:
-   hdfs dfs -mkdir /user/syc574/project
+   `hdfs dfs -mkdir /user/<your netid>/project`
 5. Put the dataset file into HDFS:
-   hdfs dfs -put rows.csv /user/syc574/project
-6. Check if the dataset is added successfully:
-   hdfs dfs -cat /user/syc574/project/rows.csv
+   `hdfs dfs -put rows.csv /user/<your netid>/project`
+6. Check if the dataset was added successfully:
+   `hdfs dfs -cat /user/<your netid>/project/rows.csv`
 
 <br>
 
-### Data Cleaning Process
+### Crimes Data Cleaning Process
 
-1. Go to the `cd CrimeData/DataCleaning` directory
-2. Execute the below commands to clean the Crime dataset
+1. Go to the directory. `cd etl_code/crime_data/data_cleaning`
+2. Clean the Crime dataset.
    ```
-   javac -classpath`yarn classpath`-d . DataCleaningMapper.java; javac -classpath`yarn classpath`-d . DataCleaningReducer.java; javac -classpath`yarn classpath`:. -d . DataCleaning.java; jar -cvf DataCleaning.jar \*.class; hdfs dfs -rm -r /user/syc574/FinalProject/output2; hadoop jar DataCleaning.jar DataCleaning /user/syc574/FinalProject/rows.csv /user/syc574/FinalProject/output2
+   javac -classpath`yarn classpath`-d . DataCleaningMapper.java;
+   javac -classpath`yarn classpath`-d . DataCleaningReducer.java;
+   javac -classpath`yarn classpath`:. -d . DataCleaning.java;
+   jar -cvf DataCleaning.jar *.class;
+   hdfs dfs -rm -r /user/<your netid>/project/output1;
+   hadoop jar DataCleaning.jar DataCleaning /user/<your netid>/project/rows.csv /user/<your netid>/project/output1
    ```
-3. Go to the `cd CrimeData/ZipCodeTable` directory
-4. Execute the below commands to generate the Zip Code matching table
+3. Go to the directory. `cd etl_code/crime_data/zip_code_table`
+4. Generate the Zip Code matching table.
    ```
-   javac -classpath `yarn classpath` -d . ZipCodeTableMapper.java; javac -classpath `yarn classpath` -d . ZipCodeTableReducer.java; javac -classpath `yarn classpath`:. -d . ZipCodeTable.java; jar -cvf ZipCodeTable.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output3; hadoop jar ZipCodeTable.jar ZipCodeTable /user/syc574/FinalProject/zipcode.csv /user/syc574/FinalProject/output3
+   javac -classpath `yarn classpath` -d . ZipCodeTableMapper.java;
+   javac -classpath `yarn classpath` -d . ZipCodeTableReducer.java;
+   javac -classpath `yarn classpath`:. -d . ZipCodeTable.java;
+   jar -cvf ZipCodeTable.jar *.class;
+   hdfs dfs -rm -r /user/<your netid>/project/output2;
+   hadoop jar ZipCodeTable.jar ZipCodeTable /user/<your netid>/project/zipcode.csv /user/<your netid>/project/output2
    ```
-5. Go to the `cd CrimeData/LonLatToZipCode` directory
-6. Execute the below commands to turn Latitude and Longitude into Zip Code
+5. Go to the directory. `cd etl_code/crime_data/lon_lat_to_zip_code`
+6. Turn Latitude and Longitude into Zip Code.
    ```
-   javac -classpath `yarn classpath` -d . LonLatToZipCodeMapper.java; javac -classpath `yarn classpath` -d . LonLatToZipCodeReducer.java; javac -classpath `yarn classpath`:. -d . LonLatToZipCode.java; jar -cvf LonLatToZipCode.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output4; hadoop jar LonLatToZipCode.jar LonLatToZipCode /user/syc574/FinalProject/output2/part-r-00000 /user/syc574/FinalProject/output4
+   javac -classpath `yarn classpath` -d . LonLatToZipCodeMapper.java;
+   javac -classpath `yarn classpath` -d . LonLatToZipCodeReducer.java;
+   javac -classpath `yarn classpath`:. -d . LonLatToZipCode.java;
+   jar -cvf LonLatToZipCode.jar *.class;
+   hdfs dfs -rm -r /user/<your netid>/project/output3;
+   hadoop jar LonLatToZipCode.jar LonLatToZipCode /user/<your netid>/project/output1/part-r-00000 /user/<your netid>/project/output3
    ```
-7. Type `hdfs dfs -cat /user/syc574/FinalProject/output4/part-r-00000`, then you can see the final dataset after the cleaning process
+7. Check the final dataset after the cleaning process `hdfs dfs -cat /user/<your netid>/project/output3/part-r-00000`
 
 <br>
 
-### Crime Data Schema:
+### Crimes Data Schema
 
 | Column name | Type   | Description                                  | Valid length |
 | ----------- | ------ | -------------------------------------------- | ------------ |
@@ -142,18 +185,23 @@ TO-DO
 
 <br>
 
-### Phase 1 - The Crime Data Counts in each Zip Code area (for Analytics)
+### Phase 1 - The Crimes Data Counts in each Zip Code area (for analytics)
 
-1. Go to the `cd CrimeData/ZipCodeCount` directory
-2. Execute the below commands to get the Crime Data Counts in each Zip Code area
+1. Go to the directory. `cd etl_code/crime_data/zip_code_count_1`
+2. Count Crime Data in each Zip Code area.
    ```
-   javac -classpath `yarn classpath` -d . ZipCodeCountMapper.java; javac -classpath `yarn classpath` -d . ZipCodeCountReducer.java; javac -classpath `yarn classpath`:. -d . ZipCodeCount.java; jar -cvf ZipCodeCount.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output5; hadoop jar ZipCodeCount.jar ZipCodeCount /user/syc574/FinalProject/output4/part-r-00000 /user/syc574/FinalProject/output5
+   javac -classpath `yarn classpath` -d . ZipCodeCountMapper.java;
+   javac -classpath `yarn classpath` -d . ZipCodeCountReducer.java;
+   javac -classpath `yarn classpath`:. -d . ZipCodeCount.java;
+   jar -cvf ZipCodeCount.jar *.class;
+   hdfs dfs -rm -r /user/<your netid>/project/output4;
+   hadoop jar ZipCodeCount.jar ZipCodeCount /user/<your netid>/project/output3/part-r-00000 /user/<your netid>/project/output4
    ```
-3. Type `hdfs dfs -cat /user/syc574/FinalProject/output5/part-r-00000`, then you can see the Phase 1 data for our analytics
+3. Check the Phase 1 data for analytics. `hdfs dfs -cat /user/syc574/FinalProject/output4/part-r-00000`
 
 <br>
 
-### Phase 1 Data Schema:
+### Crimes Data Schema (phase 1 analytics)
 
 | Column name | Type    |
 | ----------- | ------- |
@@ -162,18 +210,49 @@ TO-DO
 
 <br>
 
-### Phase 2-1 - The Crime Data Counts for each Crime Type in each Zip Code area (using Crime Type as the Columns)
+### Phase 2 - The Crime Data Counts for each Crime Type in each Zip Code area
 
-1. Go to the `cd CrimeData/ZipCodeCount2` directory
-2. Execute the below commands to get the Crime Data Counts for each Crime Type in each Zip Code area
+1. Go to the directory. `cd etl_code/crime_data/zip_code_count_2`
+2. Count Crime Data for each Crime Type in each Zip Code area.
    ```
-   javac -classpath `yarn classpath` -d . ZipCodeCountMapper2.java; javac -classpath `yarn classpath` -d . ZipCodeCountReducer2.java; javac -classpath `yarn classpath`:. -d . ZipCodeCount2.java; jar -cvf ZipCodeCount2.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output6; hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/syc574/FinalProject/output4/part-r-00000 /user/syc574/FinalProject/output6
+   javac -classpath `yarn classpath` -d . ZipCodeCountMapper2.java;
+   javac -classpath `yarn classpath` -d . ZipCodeCountReducer2.java;
+   javac -classpath `yarn classpath`:. -d . ZipCodeCount2.java;
+   jar -cvf ZipCodeCount2.jar *.class;
+   hdfs dfs -rm -r /user/<your netid>/project/output5;
+   hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/<your netid>/project/output3/part-r-00000 /user/<your netid>/project/output5
    ```
-3. Type `hdfs dfs -cat /user/syc574/FinalProject/output6/part-r-00000`, then you can see the Phase 2-1 data for our analytics
+3. Check the Phase 2 data for analytics. `hdfs dfs -cat /user/<your netid>/project/output5/part-r-00000`
 
 <br>
 
-### Phase 2-1 Data Schema:
+### Crimes Data Schema (phase 2 analytics)
+
+| Column name | Type    |
+| ----------- | ------- |
+| ZipCode     | String  |
+| CrimeType   | String  |
+| CrimeCount  | Integer |
+
+<br>
+
+### Phase 3 - The Crime Data Counts for each Crime Type in each Zip Code area (using Crime Type as the Columns)
+
+1. Go to the directory. `cd etl_code/crime_data/zip_code_count_3`
+2. Get the Crime Data Counts for each Crime Type in each Zip Code area
+   ```
+   javac -classpath `yarn classpath` -d . ZipCodeCountMapper3.java;
+   javac -classpath `yarn classpath` -d . ZipCodeCountReducer3.java;
+   javac -classpath `yarn classpath`:. -d . ZipCodeCount3.java;
+   jar -cvf ZipCodeCount3.jar *.class;
+   hdfs dfs -rm -r /user/user/<your netid>/output6;
+   hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/user/<your netid>/output3/part-r-00000 /user/user/<your netid>/output6
+   ```
+3. Check the Phase 3 data for our analytics `hdfs dfs -cat /user/user/<your netid>/output6/part-r-00000`
+
+<br>
+
+### Crimes Data Schema (Phase 3 Analytics)
 
 | Column name                                 | Type    |
 | ------------------------------------------- | ------- |
@@ -228,27 +307,6 @@ TO-DO
 | SEX CRIMES                                  | Integer |
 | THEFT-FRAUD                                 | Integer |
 | VEHICLE AND TRAFFIC LAWS                    | Integer |
-
-<br>
-
-### Phase 2-2 - The Crime Data Counts for each Crime Type in each Zip Code area
-
-1. Go to the `cd CrimeData/ZipCodeCount3` directory
-2. Execute the below commands to get the Crime Data Counts for each Crime Type in each Zip Code area
-   ```
-   javac -classpath `yarn classpath` -d . ZipCodeCountMapper3.java; javac -classpath `yarn classpath` -d . ZipCodeCountReducer3.java; javac -classpath `yarn classpath`:. -d . ZipCodeCount3.java; jar -cvf ZipCodeCount3.jar *.class; hdfs dfs -rm -r /user/syc574/FinalProject/output7; hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/syc574/FinalProject/output4/part-r-00000 /user/syc574/FinalProject/output7
-   ```
-3. Type `hdfs dfs -cat /user/syc574/FinalProject/output7/part-r-00000`, then you can see the Phase 2-2 data for our analytics
-
-<br>
-
-### Phase 2-2 Data Schema:
-
-| Column name | Type    |
-| ----------- | ------- |
-| ZipCode     | String  |
-| CrimeType   | String  |
-| CrimeCount  | Integer |
 
 <br>
 
