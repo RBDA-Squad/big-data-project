@@ -94,22 +94,23 @@
 <br>
 
 ### The Steps of Restaurant Data Ingest
-1. Log on to Dumbo.
-2. Dowload the DOHMH New York City Restaurant Inspection Results dataset (tsv format):
+1. Log on to Dumbo.  
+2. Dowload the DOHMH New York City Restaurant Inspection Results dataset (tsv format).  
    `curl -O https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.tsv?accessType=DOWNLOAD&bom=true`
-3. Make a new directory in HDFS:
+3. Make a new directory in HDFS.  
    `hdfs dfs -mkdir /user/<your netid>/project/dataset`
-4. Put the dataset file into HDFS:
+4. Put the dataset file into HDFS.  
    `hdfs dfs -put rst.tsv /user/<your netid>/project/dataset`
-or, execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`:
+
+or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.  
    `./data_ingest/restaurant_data/DataIngest.sh`
 
 <br>
 
 ### The Steps of Restaurant Data Cleaning
-1. Go to the data cleaning directory: 
+1. Go to the data cleaning directory.  
    `cd etl_code/restaurant_data/DataCleaning`
-2. Execute `DataCleaning.sh`
+2. Execute `DataCleaning.sh`.  
    `./DataCleaning.sh`
 <br>
 
@@ -147,17 +148,17 @@ COLUMNS:
 <br>
 
 ### Phase 1 - Count the restaurant data for different zip code's areas (analytics purpose)
-1. Go to the ETL directory:
+1. Go to the ETL directory.  
    `cd analytic_code/phase1/ETL`
-2. Construct table of restaurants needed for analytic phase1:
+2. Construct table of restaurants needed for analytic phase1.  
    `./DataCleaning.sh`
-3. Go to the Join directory:
+3. Go to the Join directory.  
    `cd analytic_code/phase1/Join`
-4. Join restaurant table, 311 table, crime table:
+4. Join restaurant table, 311 table, crime table.  
    `./JoinTables.sh`
-5. Go to the linear regression directory:
+5. Go to the linear regression directory.  
    `cd analytic_code/phase1/LinearRegression`
-6. Run simple linear regression on the joined data:
+6. Run simple linear regression on the joined data.  
    `./execute.sh`
 <br>
 
@@ -180,17 +181,17 @@ COLUMNS:
 <br>
 
 ### Phase 2 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
-1. Go to the ETL directory:
+1. Go to the ETL directory.  
    `cd analytic_code/phase2/ETL`
-2. Construct table of restaurants needed for analytic phase2:
+2. Construct table of restaurants needed for analytic phase2.  
    `./ConstructTables.sh`
-3. Go to the Join directory:
+3. Go to the Join directory.  
    `cd analytic_code/phase2/Join`
-4. Join restaurant table, 311 table, crime table:
+4. Join restaurant table, 311 table, crime table.  
    `./JoinTables.sh`
-5. Go to the linear regression directory:
+5. Go to the linear regression directory.  
    `cd analytic_code/phase2/LinearRegression`
-6. Run OLS multiple linear regression on the joined data:
+6. Run OLS multiple linear regression on the joined data.  
    `./execute.sh`
 <br>
 
@@ -227,6 +228,12 @@ COLUMNS:
 | sexcrimes   | Bigint  |
 | murder      | Bigint  |
 
+<br>
+
+### The references for Apache Commons Math 3.3 Linear Regression API:
+
+- https://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/regression/SimpleRegression.html
+- https://commons.apache.org/proper/commons-math/javadocs/api-3.0/org/apache/commons/math3/stat/regression/OLSMultipleLinearRegression.html
 <br><br>
 
 ## Crime Data
