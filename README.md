@@ -94,30 +94,138 @@
 <br>
 
 ### The Steps of Restaurant Data Ingest
+1. Log on to Dumbo.
+2. Dowload the DOHMH New York City Restaurant Inspection Results dataset (tsv format):
+   `curl -O https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.tsv?accessType=DOWNLOAD&bom=true`
+3. Make a new directory in HDFS:
+   `hdfs dfs -mkdir /user/<your netid>/project/dataset`
+4. Put the dataset file into HDFS:
+   `hdfs dfs -put rst.tsv /user/<your netid>/project/dataset`
+or, execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`:
+   `./data_ingest/restaurant_data/DataIngest.sh`
 
 <br>
 
 ### The Steps of Restaurant Data Cleaning
-
+1. Go to the data cleaning directory: 
+   `cd etl_code/restaurant_data/DataCleaning`
+2. Execute `DataCleaning.sh`
+   `./DataCleaning.sh`
 <br>
 
 ### Restaurant Data Schema
+COLUMNS:
 
+	CAMIS:
+		TYPE: STRING
+		DESCRIPTION: Unique identifier for the restaurant.
+		VALID_STRING_LENGTH := 8
+
+	BORO:
+		TYPE: STRING
+		DESCRIPTION: Borough of restaurant location.
+		VALID_VALUES := {Bronx, Brooklyn, Manhattan, Queens, Staten Island}
+		NUM_OF_RESTAURANT_PER_BORO := { Bronx: 35993,
+					        Brooklyn: 100327,
+						Manhattan: 155010,
+						Queens: 90473,
+						Staten Island: 13130}
+	
+	CUISINE:
+		TYPE: STRING
+		DESCRIPTION: Restaurant cuisine.
+
+	LATITUDE:
+		TYPE: DOUBLE
+		DESCRIPTION: Restaurant latitude.
+		VALID_STRING_LENGTH := {12, 13, 14, 15}
+	
+	LONGITUDE:
+		TYPE: DOUBLE
+		DESCRIPTION: Restaurant longitude.
+		VALID_STRING_LENGTH := {12, 13, 14, 15, 16}
 <br>
 
 ### Phase 1 - Count the restaurant data for different zip code's areas (analytics purpose)
-
+1. Go to the ETL directory:
+   `cd analytic_code/phase1/ETL`
+2. Construct table of restaurants needed for analytic phase1:
+   `./DataCleaning.sh`
+3. Go to the Join directory:
+   `cd analytic_code/phase1/Join`
+4. Join restaurant table, 311 table, crime table:
+   `./JoinTables.sh`
+5. Go to the linear regression directory:
+   `cd analytic_code/phase1/LinearRegression`
+6. Run simple linear regression on the joined data:
+   `./execute.sh`
 <br>
 
 ### Restaurant Data Schema (Phase 1)
 
+| Column name | Type    |
+| ----------- | ------- |
+| zipcode     | String  |
+| num_of_rts  | Bigint  |
+
+### Joined Data Schema (Phase 1)
+
+| Column name | Type    |
+| ----------- | ------- |
+| zipcode     | String  |
+| num_of_rts  | Bigint  |
+| num_of_cps  | Bigint  |
+| num_of_cms  | Bigint  |
+
 <br>
 
 ### Phase 2 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
-
+1. Go to the ETL directory:
+   `cd analytic_code/phase2/ETL`
+2. Construct table of restaurants needed for analytic phase2:
+   `./ConstructTables.sh`
+3. Go to the Join directory:
+   `cd analytic_code/phase2/Join`
+4. Join restaurant table, 311 table, crime table:
+   `./JoinTables.sh`
+5. Go to the linear regression directory:
+   `cd analytic_code/phase2/LinearRegression`
+6. Run OLS multiple linear regression on the joined data:
+   `./execute.sh`
 <br>
 
 ### Restaurant Data Schema (Phase 2)
+
+| Column name | Type    |
+| ----------- | ------- |
+| zipcode     | String  |
+| american    | Bigint  |
+| chinese     | Bigint  |
+| mexican     | Bigint  |
+| italian     | Bigint  |
+| japanese    | Bigint  |
+
+<br>
+
+### Joined Data Schema (Phase 2)
+| Column name | Type    |
+| ----------- | ------- |
+| zipcode     | String  |
+| american    | Bigint  |
+| chinese     | Bigint  |
+| mexican     | Bigint  |
+| italian     | Bigint  |
+| japanese    | Bigint  |
+| noise       | Bigint  |
+| homeless    | Bigint  |
+| animalabuse | Bigint  |
+| safety      | Bigint  |
+| drugactivity| Bigint  |
+| robbery     | Bigint  |
+| burglary    | Bigint  |
+| weapons     | Bigint  |
+| sexcrimes   | Bigint  |
+| murder      | Bigint  |
 
 <br><br>
 
