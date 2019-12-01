@@ -1,6 +1,6 @@
 # Realtime Big Data - Final Project
 
-## 311 Data
+## Data Ingest Stage
 
 ### The Steps of 311 Data Ingest
 
@@ -14,17 +14,76 @@
 
 <br>
 
+### The Steps of Restaurant Data Ingest
+
+1. Log on to Dumbo.
+2. Dowload the DOHMH New York City Restaurant Inspection Results dataset (tsv format).  
+   `curl -O https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.tsv?accessType=DOWNLOAD&bom=true`
+3. Make a new directory in HDFS.  
+   `hdfs dfs -mkdir /user/<your netid>/project/dataset`
+4. Put the dataset file into HDFS.  
+    `hdfs dfs -put rst.tsv /user/<your netid>/project/dataset`
+
+   or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.  
+   `./data_ingest/restaurant_data/DataIngest.sh`
+
+<br>
+
+### The Steps of Crime Data Ingest
+
+1. Login to Dumbo.
+2. Download the dataset (csv format) through the URL.  
+   `curl -O https://data.cityofnewyork.us/api/views/8h9b-rp9u/rows.csv?accessType=DOWNLOAD`
+3. Change the file name to a shorter one.  
+   `mv rows.csv?accessType=DOWNLOAD rows.csv`
+4. Make a new directory in HDFS.  
+   `hdfs dfs -mkdir /user/<your netid>/project`
+5. Put the dataset file into HDFS.  
+   `hdfs dfs -put rows.csv /user/<your netid>/project`
+
+<br><br>
+
+## Data Profiling Stage
+
+### The Steps of 311 Data Profiling
+
+<br>
+
+### The Steps of Restaurant Data Profiling
+
+<br>
+
+### The Steps of Crime Data Profiling
+
+1. Go to the directory.  
+   `cd profiling_code/crime_code/data_profiling_1`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/dp_1_output;`
+3. Profile the crime dataset.  
+   `hadoop jar DataProfiling.jar DataProfiling /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_1_output`
+4. Go to the directory.  
+   `cd profiling_code/crime_code/data_profiling_2`
+5. Remove the output folder if it exists.
+   `hdfs dfs -rm -r /user/<your netid>/project/dp_2_output`
+6. Profile the crime dataset.
+   `hadoop jar DataProfiling2.jar DataProfiling2 /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_2_output`
+
+<br><br>
+
+## ETL Stage
+
+<br>
+
+## 311 Data
+
+<br>
+
 ### The Steps of 311 Data Cleaning
 
-1. Go to the 311/cleaning directory.  
-   `cd 311/cleaning`
+1. Go to the directory.  
+   `cd etl_code/311_data/data_cleaning`
 2. Clean the 311 dataset.
-   ```
-   javac -classpath `yarn classpath` -d . CleaningMapper.java
-   javac -classpath `yarn classpath`:. -d . CleaningDriver.java
-   jar -cvf CleaningDriver.jar *.class
-   hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned
-   ```
+   `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
 
 <br>
 
@@ -43,15 +102,9 @@
 ### Phase 1 - Count the complaint data for different zip code's areas (analytics purpose)
 
 1. Go to the directory.  
-   `cd 311/complaint_count_by_zipcode`
+   `cd etl_code/311_data/complaint_count_by_zipcode`
 2. Generate the count of complaint by zipcode.
-   ```
-   javac -classpath `yarn classpath` -d . ZipcodeCountMapper.java
-   javac -classpath `yarn classpath` -d . ZipcodeCountReducer.java
-   javac -classpath `yarn classpath`:. -d . ZipcodeCountDriver.java
-   jar -cvf ZipcodeCountDriver.jar *.class
-   hadoop jar ZipcodeCountDriver.jar ZipcodeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_count_by_zipcode
-   ```
+   `hadoop jar ZipcodeCountDriver.jar ZipcodeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_count_by_zipcode`
 
 <br>
 
@@ -67,15 +120,9 @@
 ### Phase 2 - Count the complaint data for different complaint types in each zip code area (analytics purpose)
 
 1. Go to the directory.  
-   `cd 311/complaint_types_count_by_zipcode`
+   `cd etl_code/311_data/complaint_types_count_by_zipcode`
 2. Generate the count of complaint types by zipcode.
-   ```
-   javac -classpath `yarn classpath` -d . ComplaintTypeCountMapper.java
-   javac -classpath `yarn classpath` -d . ComplaintTypeCountReducer.java
-   javac -classpath `yarn classpath`:. -d . ComplaintTypeCountDriver.java
-   jar -cvf ComplaintTypeCountDriver.jar *.class
-   hadoop jar ComplaintTypeCountDriver.jar ComplaintTypeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_type_count_by_zipcode
-   ```
+   `hadoop jar ComplaintTypeCountDriver.jar ComplaintTypeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_type_count_by_zipcode`
 
 <br>
 
@@ -87,170 +134,152 @@
 | ComplaintType | String |
 | Count         | String |
 
-<br>
+<br><br>
 
 ## Restaurant Data
 
 <br>
 
-### The Steps of Restaurant Data Ingest
-1. Log on to Dumbo.  
-2. Dowload the DOHMH New York City Restaurant Inspection Results dataset (tsv format).  
-   `curl -O https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.tsv?accessType=DOWNLOAD&bom=true`
-3. Make a new directory in HDFS.  
-   `hdfs dfs -mkdir /user/<your netid>/project/dataset`
-4. Put the dataset file into HDFS.  
-   `hdfs dfs -put rst.tsv /user/<your netid>/project/dataset`
-
-or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.  
-   `./data_ingest/restaurant_data/DataIngest.sh`
-
-<br>
-
 ### The Steps of Restaurant Data Cleaning
+
 1. Go to the data cleaning directory.  
-   `cd etl_code/restaurant_data/DataCleaning`
+   `cd etl_code/restaurant_data/data_cleaning`
 2. Execute `DataCleaning.sh`.  
    `./DataCleaning.sh`
+
 <br>
 
 ### Restaurant Data Schema
+
 COLUMNS:
 
-	CAMIS:
-		TYPE: STRING
-		DESCRIPTION: Unique identifier for the restaurant.
-		VALID_STRING_LENGTH := 8
+    CAMIS:
+        TYPE: STRING
+        DESCRIPTION: Unique identifier for the restaurant.
+        VALID_STRING_LENGTH := 8
 
-	BORO:
-		TYPE: STRING
-		DESCRIPTION: Borough of restaurant location.
-		VALID_VALUES := {Bronx, Brooklyn, Manhattan, Queens, Staten Island}
-		NUM_OF_RESTAURANT_PER_BORO := { Bronx: 35993,
-					        Brooklyn: 100327,
-						Manhattan: 155010,
-						Queens: 90473,
-						Staten Island: 13130}
-	
-	CUISINE:
-		TYPE: STRING
-		DESCRIPTION: Restaurant cuisine.
+    BORO:
+        TYPE: STRING
+        DESCRIPTION: Borough of restaurant location.
+        VALID_VALUES := {Bronx, Brooklyn, Manhattan, Queens, Staten Island}
+        NUM_OF_RESTAURANT_PER_BORO := { Bronx: 35993,
+                        Brooklyn: 100327,
+                        Manhattan: 155010,
+                        Queens: 90473,
+                        Staten Island: 13130}
 
-	LATITUDE:
-		TYPE: DOUBLE
-		DESCRIPTION: Restaurant latitude.
-		VALID_STRING_LENGTH := {12, 13, 14, 15}
-	
-	LONGITUDE:
-		TYPE: DOUBLE
-		DESCRIPTION: Restaurant longitude.
-		VALID_STRING_LENGTH := {12, 13, 14, 15, 16}
+    CUISINE:
+        TYPE: STRING
+        DESCRIPTION: Restaurant cuisine.
+
+    LATITUDE:
+        TYPE: DOUBLE
+        DESCRIPTION: Restaurant latitude.
+        VALID_STRING_LENGTH := {12, 13, 14, 15}
+
+    LONGITUDE:
+        TYPE: DOUBLE
+        DESCRIPTION: Restaurant longitude.
+        VALID_STRING_LENGTH := {12, 13, 14, 15, 16}
+
 <br>
 
 ### Phase 1 - Count the restaurant data for different zip code's areas (analytics purpose)
+
 1. Go to the ETL directory.  
-   `cd analytic_code/phase1/ETL`
+   `cd code_iterations/phase1/ETL`
 2. Construct table of restaurants needed for analytic phase1.  
    `./DataCleaning.sh`
 3. Go to the Join directory.  
-   `cd analytic_code/phase1/Join`
+   `cd code_iterations/phase1/Join`
 4. Join restaurant table, 311 table, crime table.  
    `./JoinTables.sh`
 5. Go to the linear regression directory.  
-   `cd analytic_code/phase1/LinearRegression`
+   `cd code_iterations/phase1/LinearRegression`
 6. Run simple linear regression on the joined data.  
    `./execute.sh`
+
 <br>
 
 ### Restaurant Data Schema (Phase 1)
 
-| Column name | Type    |
-| ----------- | ------- |
-| zipcode     | String  |
-| num_of_rts  | Bigint  |
+| Column name | Type   |
+| ----------- | ------ |
+| zipcode     | String |
+| num_of_rts  | Bigint |
 
 ### Joined Data Schema (Phase 1)
 
-| Column name | Type    |
-| ----------- | ------- |
-| zipcode     | String  |
-| num_of_rts  | Bigint  |
-| num_of_cps  | Bigint  |
-| num_of_cms  | Bigint  |
+| Column name | Type   |
+| ----------- | ------ |
+| zipcode     | String |
+| num_of_rts  | Bigint |
+| num_of_cps  | Bigint |
+| num_of_cms  | Bigint |
 
 <br>
 
 ### Phase 2 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
+
 1. Go to the ETL directory.  
-   `cd analytic_code/phase2/ETL`
+   `cd code_iterations/phase2/ETL`
 2. Construct table of restaurants needed for analytic phase2.  
    `./ConstructTables.sh`
 3. Go to the Join directory.  
-   `cd analytic_code/phase2/Join`
+   `cd code_iterations/phase2/Join`
 4. Join restaurant table, 311 table, crime table.  
    `./JoinTables.sh`
 5. Go to the linear regression directory.  
-   `cd analytic_code/phase2/LinearRegression`
+   `cd code_iterations/phase2/LinearRegression`
 6. Run OLS multiple linear regression on the joined data.  
    `./execute.sh`
+
 <br>
 
 ### Restaurant Data Schema (Phase 2)
 
-| Column name | Type    |
-| ----------- | ------- |
-| zipcode     | String  |
-| american    | Bigint  |
-| chinese     | Bigint  |
-| mexican     | Bigint  |
-| italian     | Bigint  |
-| japanese    | Bigint  |
+| Column name | Type   |
+| ----------- | ------ |
+| zipcode     | String |
+| american    | Bigint |
+| chinese     | Bigint |
+| mexican     | Bigint |
+| italian     | Bigint |
+| japanese    | Bigint |
 
 <br>
 
 ### Joined Data Schema (Phase 2)
-| Column name | Type    |
-| ----------- | ------- |
-| zipcode     | String  |
-| american    | Bigint  |
-| chinese     | Bigint  |
-| mexican     | Bigint  |
-| italian     | Bigint  |
-| japanese    | Bigint  |
-| noise       | Bigint  |
-| homeless    | Bigint  |
-| animalabuse | Bigint  |
-| safety      | Bigint  |
-| drugactivity| Bigint  |
-| robbery     | Bigint  |
-| burglary    | Bigint  |
-| weapons     | Bigint  |
-| sexcrimes   | Bigint  |
-| murder      | Bigint  |
+
+| Column name  | Type   |
+| ------------ | ------ |
+| zipcode      | String |
+| american     | Bigint |
+| chinese      | Bigint |
+| mexican      | Bigint |
+| italian      | Bigint |
+| japanese     | Bigint |
+| noise        | Bigint |
+| homeless     | Bigint |
+| animalabuse  | Bigint |
+| safety       | Bigint |
+| drugactivity | Bigint |
+| robbery      | Bigint |
+| burglary     | Bigint |
+| weapons      | Bigint |
+| sexcrimes    | Bigint |
+| murder       | Bigint |
 
 <br>
 
-### The references for Apache Commons Math 3.3 Linear Regression API:
+### The references for Apache Commons Math 3.3 Linear Regression API
 
 - https://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/regression/SimpleRegression.html
 - https://commons.apache.org/proper/commons-math/javadocs/api-3.0/org/apache/commons/math3/stat/regression/OLSMultipleLinearRegression.html
+
 <br><br>
 
 ## Crime Data
-
-### The Steps of Crime Data Ingest
-
-1. Login to Dumbo.
-2. Download the dataset (csv format) through the URL.  
-   `curl -O https://data.cityofnewyork.us/api/views/8h9b-rp9u/rows.csv?accessType=DOWNLOAD`
-3. Change the file name to a shorter one.  
-   `mv rows.csv?accessType=DOWNLOAD rows.csv`
-4. Make a new directory in HDFS.  
-   `hdfs dfs -mkdir /user/<your netid>/project`
-5. Put the dataset file into HDFS.  
-   `hdfs dfs -put rows.csv /user/<your netid>/project`
-6. Check if the dataset was added successfully.  
-   `hdfs dfs -cat /user/<your netid>/project/rows.csv`
 
 <br>
 
@@ -258,39 +287,24 @@ COLUMNS:
 
 1. Go to the directory.  
    `cd etl_code/crime_data/data_cleaning`
-2. Clean the Crime dataset.
-   ```
-   javac -classpath`yarn classpath`-d . DataCleaningMapper.java;
-   javac -classpath`yarn classpath`-d . DataCleaningReducer.java;
-   javac -classpath`yarn classpath`:. -d . DataCleaning.java;
-   jar -cvf DataCleaning.jar *.class;
-   hdfs dfs -rm -r /user/<your netid>/project/output1;
-   hadoop jar DataCleaning.jar DataCleaning /user/<your netid>/project/rows.csv /user/<your netid>/project/output1
-   ```
-3. Go to the directory.  
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/dc_output`
+3. Clean the Crime dataset.  
+   `hadoop jar DataCleaning.jar DataCleaning /user/<your netid>/project/rows.csv /user/<your netid>/project/dc_output`
+4. Go to the directory.  
    `cd etl_code/crime_data/zip_code_table`
-4. Generate the Zip Code matching table.
-   ```
-   javac -classpath `yarn classpath` -d . ZipCodeTableMapper.java;
-   javac -classpath `yarn classpath` -d . ZipCodeTableReducer.java;
-   javac -classpath `yarn classpath`:. -d . ZipCodeTable.java;
-   jar -cvf ZipCodeTable.jar *.class;
-   hdfs dfs -rm -r /user/<your netid>/project/output2;
-   hadoop jar ZipCodeTable.jar ZipCodeTable /user/<your netid>/project/zipcode.csv /user/<your netid>/project/output2
-   ```
-5. Go to the directory.  
+5. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/zct_output;`
+6. Generate the Zip Code matching table.  
+   `hadoop jar ZipCodeTable.jar ZipCodeTable /user/<your netid>/project/zipcode.csv /user/<your netid>/project/zct_output`
+7. Go to the directory.  
    `cd etl_code/crime_data/lon_lat_to_zip_code`
-6. Turn Latitude and Longitude into Zip Code.
-   ```
-   javac -classpath `yarn classpath` -d . LonLatToZipCodeMapper.java;
-   javac -classpath `yarn classpath` -d . LonLatToZipCodeReducer.java;
-   javac -classpath `yarn classpath`:. -d . LonLatToZipCode.java;
-   jar -cvf LonLatToZipCode.jar *.class;
-   hdfs dfs -rm -r /user/<your netid>/project/output3;
-   hadoop jar LonLatToZipCode.jar LonLatToZipCode /user/<your netid>/project/output1/part-r-00000 /user/<your netid>/project/output3
-   ```
-7. Check the final dataset after the cleaning process.  
-   `hdfs dfs -cat /user/<your netid>/project/output3/part-r-00000`
+8. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/llzc_output;`
+9. Turn Latitude and Longitude into Zip Code.  
+   `hadoop jar LonLatToZipCode.jar LonLatToZipCode /user/<your netid>/project/dc_output/part-r-00000 /user/<your netid>/project/llzc_output`
+10. Check the final dataset after the cleaning process.  
+    `hdfs dfs -cat /user/<your netid>/project/llzc_output/part-r-00000`
 
 <br>
 
@@ -312,17 +326,12 @@ COLUMNS:
 
 1. Go to the directory.  
    `cd etl_code/crime_data/zip_code_count_1`
-2. Count Crime Data in each Zip Code area.
-   ```
-   javac -classpath `yarn classpath` -d . ZipCodeCountMapper.java;
-   javac -classpath `yarn classpath` -d . ZipCodeCountReducer.java;
-   javac -classpath `yarn classpath`:. -d . ZipCodeCount.java;
-   jar -cvf ZipCodeCount.jar *.class;
-   hdfs dfs -rm -r /user/<your netid>/project/output4;
-   hadoop jar ZipCodeCount.jar ZipCodeCount /user/<your netid>/project/output3/part-r-00000 /user/<your netid>/project/output4
-   ```
-3. Check the Phase 1 data for analytics.  
-   `hdfs dfs -cat /user/syc574/FinalProject/output4/part-r-00000`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/zcc_1_output;`
+3. Count Crime Data in each Zip Code area.  
+   `hadoop jar ZipCodeCount.jar ZipCodeCount /user/<your netid>/project/llzc_output/part-r-00000 /user/<your netid>/project/zcc_1_output`
+4. Check the Phase 1 data for analytics.  
+   `hdfs dfs -cat /user/syc574/FinalProject/zcc_1_output/part-r-00000`
 
 <br>
 
@@ -339,17 +348,12 @@ COLUMNS:
 
 1. Go to the directory.  
    `cd etl_code/crime_data/zip_code_count_2`
-2. Count Crime Data for each Crime Type in each Zip Code area.
-   ```
-   javac -classpath `yarn classpath` -d . ZipCodeCountMapper2.java;
-   javac -classpath `yarn classpath` -d . ZipCodeCountReducer2.java;
-   javac -classpath `yarn classpath`:. -d . ZipCodeCount2.java;
-   jar -cvf ZipCodeCount2.jar *.class;
-   hdfs dfs -rm -r /user/<your netid>/project/output5;
-   hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/<your netid>/project/output3/part-r-00000 /user/<your netid>/project/output5
-   ```
-3. Check the Phase 2 data for analytics.  
-   `hdfs dfs -cat /user/<your netid>/project/output5/part-r-00000`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/zcc_2_output;`
+3. Count Crime Data for each Crime Type in each Zip Code area.  
+   `hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/<your netid>/project/llzc_output/part-r-00000 /user/<your netid>/project/zcc_2_output`
+4. Check the Phase 2 data for analytics.  
+   `hdfs dfs -cat /user/<your netid>/project/zcc_2_output/part-r-00000`
 
 <br>
 
@@ -367,17 +371,12 @@ COLUMNS:
 
 1. Go to the directory.  
    `cd etl_code/crime_data/zip_code_count_3`
-2. Get the Crime Data Counts for each Crime Type in each Zip Code area.
-   ```
-   javac -classpath `yarn classpath` -d . ZipCodeCountMapper3.java;
-   javac -classpath `yarn classpath` -d . ZipCodeCountReducer3.java;
-   javac -classpath `yarn classpath`:. -d . ZipCodeCount3.java;
-   jar -cvf ZipCodeCount3.jar *.class;
-   hdfs dfs -rm -r /user/user/<your netid>/output6;
-   hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/user/<your netid>/output3/part-r-00000 /user/user/<your netid>/output6
-   ```
-3. Check the Phase 3 data for our analytics.  
-   `hdfs dfs -cat /user/user/<your netid>/output6/part-r-00000`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/user/<your netid>/zcc_3_output;`
+3. Get the Crime Data Counts for each Crime Type in each Zip Code area.  
+   `hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/user/<your netid>/llzc_output/part-r-00000 /user/user/<your netid>/zcc_3_output`
+4. Check the Phase 3 data for our analytics.  
+   `hdfs dfs -cat /user/user/<your netid>/zcc_3_output/part-r-00000`
 
 <br>
 
@@ -462,3 +461,7 @@ COLUMNS:
 <br>
 
 ![rm2](screenshots/rm2.png)
+
+<br><br>
+
+## Analytics
