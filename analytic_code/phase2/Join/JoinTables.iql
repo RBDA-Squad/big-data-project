@@ -1,0 +1,8 @@
+use jl11046;
+
+create table phase2_joined as
+select a.zipcode, a.american, a.chinese, a.mexican, a.italian, a.japanese,
+       b.noise, b.homeless, b.animalabuse, b.safety, b.drugactivity,
+       c.robbery, c.burglary, c.weapons, c.sexcrimes, c.murder
+from rts_phase2 a inner join 311_phase2 b on a.zipcode = b.zipcode
+inner join crime_phase2 c on b.zipcode = c.zipcode;

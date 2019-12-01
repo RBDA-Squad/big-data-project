@@ -1,0 +1,34 @@
+use jl11046;
+
+CREATE TABLE rts_phase2 AS
+SELECT
+	zipcode,
+	SUM(CASE WHEN cuisine = "American" THEN num_of_rts ELSE 0 END) AS American,
+	SUM(CASE WHEN cuisine = "Chinese" THEN num_of_rts ELSE 0 END) AS Chinese,
+	SUM(CASE WHEN cuisine = "Mexican" THEN num_of_rts ELSE 0 END) AS Mexican,
+	SUM(CASE WHEN cuisine = "Italian" THEN num_of_rts ELSE 0 END) AS Italian,
+	SUM(CASE WHEN cuisine = "Japanese" THEN num_of_rts ELSE 0 END) AS Japanese
+FROM rts_phase2_raw
+GROUP BY zipcode;
+
+CREATE TABLE 311_phase2 AS
+SELECT
+	zipcode,
+	SUM(CASE WHEN cp_type = "Noise - Residential" THEN num_of_cps ELSE 0 END) AS Noise,
+	SUM(CASE WHEN cp_type = "Homeless Person Assistance" THEN num_of_cps ELSE 0 END) AS Homeless,
+	SUM(CASE WHEN cp_type = "Animal Abuse" THEN num_of_cps ELSE 0 END) AS AnimalAbuse,
+	SUM(CASE WHEN cp_type = "SAFETY" THEN num_of_cps ELSE 0 END) AS Safety,
+	SUM(CASE WHEN cp_type = "Drug Activity" THEN num_of_cps ELSE 0 END) AS DrugActivity
+FROM 311_phase2_raw
+GROUP BY zipcode;
+
+CREATE TABLE crime_phase2 AS
+SELECT
+	zipcode,
+	SUM(CASE WHEN cm_type = "ROBBERY" THEN num_of_cms ELSE 0 END) AS Robbery,
+	SUM(CASE WHEN cm_type = "BURGLARY" THEN num_of_cms ELSE 0 END) AS Burglary,
+	SUM(CASE WHEN cm_type = "DANGEROUS WEAPONS" THEN num_of_cms ELSE 0 END) AS Weapons,
+	SUM(CASE WHEN cm_type = "SEX CRIMES" THEN num_of_cms ELSE 0 END) AS SexCrimes,
+	SUM(CASE WHEN cm_type = "MURDER & NON-NEGL. MANSLAUGHTER" THEN num_of_cms ELSE 0 END) AS Murder
+FROM crime_phase2_raw
+GROUP BY zipcode;

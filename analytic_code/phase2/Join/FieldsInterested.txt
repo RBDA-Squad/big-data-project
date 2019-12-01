@@ -1,0 +1,23 @@
+X:
+	Restaurants:
+		American
+		Chinese
+		Mexican
+		Italian
+		Japanese
+	Complaints:
+		Noise - Residential
+		Homeless Person Assistance
+		Animal Abuse
+		SAFETY
+		Drug Activity
+	
+Y:
+	Crimes:
+		ROBBERY
+		BURGLARY
+		DANGEROUS WEAPONS
+		SEX CRIMES
+		MURDER & NON-NEGL. MANSLAUGHTER
+
+

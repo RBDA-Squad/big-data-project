@@ -1,0 +1,18 @@
+use jl11046;
+
+create table rts_phase2 as
+select zipcode, cuisine, num_of_rts
+from rts_phase2_raw
+where cuisine in ("American", "Chinese", "Mexican", "Italian", "Japanese")
+order by zipcode, cuisine;
+
+create table 311_phase2 as
+select zipcode, cp_type, num_of_cps
+from 311_phase2_raw
+where cp_type in ("Noise - Residential", "Homeless Person Assistance", "Animal Abuse", "SAFETY", "Drug Activity")
+order by zipcode, cp_type;
+
+create table crime_phase2 as
+select zipcode, cm_type, num_of_cms
+from crime_phase2_raw
+where cm_type in ("ROBBERY", "BURGLARY", "DANGEROUS WEAPONS", "SEX CRIMES", "MURDER & NON-NEGL. MANSLAUGHTER");

@@ -1,0 +1,23 @@
+use jl11046;
+
+CREATE EXTERNAL TABLE 311_raw(
+TIME STRING,
+COMPLAINT_TYPE STRING,
+ZIPCODE STRING,
+LATITUDE STRING,
+LONGITUDE STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION "/user/jl11046/Final/phase1/Join/input/311";
+
+create table 311_phase1 as
+select zipcode, count(*) as num_of_cps
+from 311_raw
+where length(zipcode) = 5
+group by zipcode
+order by zipcode;
+
+CREATE EXTERNAL TABLE crime_phase1(
+ZIPCODE STRING,
+num_of_cms STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION "/user/jl11046/Final/phase1/Join/input/crime";
