@@ -58,7 +58,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 1. Go to the directory.  
    `cd etl_code/311_data/data_cleaning`
 2. Clean the 311 dataset.  
-   \ `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
+   `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
 
 <br>
 
@@ -245,7 +245,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
    `hadoop jar DataCleaning.jar DataCleaning /user/<your netid>/project/rows.csv /user/<your netid>/project/dc_output`
 4. Go to the directory.  
    `cd etl_code/crime_data/zip_code_table`
-5. Put the zip code table file into HDFS.
+5. Put the zip code table file into HDFS.  
    `hdfs dfs -put zipcode.csv /user/<your netid>/project`
 6. Remove the output folder if it exists.  
    `hdfs dfs -rm -r /user/<your netid>/project/zct_output`
@@ -281,11 +281,11 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 1. Go to the directory.  
    `cd etl_code/crime_data/zip_code_count_1`
 2. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/zcc_1_output;`
+   `hdfs dfs -rm -r /user/<your netid>/project/zcc_1_output`
 3. Count Crime Data in each Zip Code area.  
    `hadoop jar ZipCodeCount.jar ZipCodeCount /user/<your netid>/project/llzc_output/part-r-00000 /user/<your netid>/project/zcc_1_output`
 4. Check the Phase 1 data for analytics.  
-   `hdfs dfs -cat /user/syc574/FinalProject/zcc_1_output/part-r-00000`
+   `hdfs dfs -cat /user/<your netid>/project/zcc_1_output/part-r-00000`
 
 <br>
 
@@ -303,7 +303,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 1. Go to the directory.  
    `cd etl_code/crime_data/zip_code_count_2`
 2. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/zcc_2_output;`
+   `hdfs dfs -rm -r /user/<your netid>/project/zcc_2_output`
 3. Count Crime Data for each Crime Type in each Zip Code area.  
    `hadoop jar ZipCodeCount2.jar ZipCodeCount2 /user/<your netid>/project/llzc_output/part-r-00000 /user/<your netid>/project/zcc_2_output`
 4. Check the Phase 2 data for analytics.  
@@ -326,11 +326,11 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 1. Go to the directory.  
    `cd etl_code/crime_data/zip_code_count_3`
 2. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/user/<your netid>/zcc_3_output;`
+   `hdfs dfs -rm -r /user/<your netid>/project/zcc_3_output`
 3. Get the Crime Data Counts for each Crime Type in each Zip Code area.  
-   `hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/user/<your netid>/llzc_output/part-r-00000 /user/user/<your netid>/zcc_3_output`
+   `hadoop jar ZipCodeCount3.jar ZipCodeCount3 /user/<your netid>/project/llzc_output/part-r-00000 /user/<your netid>/project/zcc_3_output`
 4. Check the Phase 3 data for our analytics.  
-   `hdfs dfs -cat /user/user/<your netid>/zcc_3_output/part-r-00000`
+   `hdfs dfs -cat /user/<your netid>/project/zcc_3_output/part-r-00000`
 
 <br>
 
@@ -405,17 +405,21 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 ### The Steps of Crime Data Profiling
 
 1. Go to the directory.  
-   `cd profiling_code/crime_code/data_profiling_1`
+   `cd profiling_code/crime_data/data_profiling_1`
 2. Remove the output folder if it exists.  
    `hdfs dfs -rm -r /user/<your netid>/project/dp_1_output`
 3. Profile the crime dataset.  
    `hadoop jar DataProfiling.jar DataProfiling /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_1_output`
-4. Go to the directory.  
-   `cd profiling_code/crime_code/data_profiling_2`
-5. Remove the output folder if it exists.  
+4. Check the result of data profiling.  
+   `hdfs dfs -cat /user/<your netid>/project/dp_1_output/part-r-00000`
+5. Go to the directory.  
+   `cd profiling_code/crime_data/data_profiling_2`
+6. Remove the output folder if it exists.  
    `hdfs dfs -rm -r /user/<your netid>/project/dp_2_output`
-6. Profile the crime dataset for checking the crime type characteristics.  
+7. Profile the crime dataset for checking the crime type characteristics.  
    `hadoop jar DataProfiling2.jar DataProfiling2 /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_2_output`
+8. Check the result of data profiling for crime type characteristics.  
+   `hdfs dfs -cat /user/<your netid>/project/dp_2_output/part-r-00000`
 
 <br><br>
 
