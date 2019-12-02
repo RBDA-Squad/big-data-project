@@ -2,6 +2,8 @@
 
 The following commands are executed in the working directory (this project path)
 
+<br>
+
 ## Data Ingest Stage
 
 ### The Steps of 311 Data Ingest
@@ -49,9 +51,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 <br>
 
-## 311 Data
-
-<br>
+## 1. 311 Data
 
 ### The Steps of 311 Data Cleaning
 
@@ -111,9 +111,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 <br><br>
 
-## Restaurant Data
-
-<br>
+## 2. Restaurant Data
 
 ### The Steps of Restaurant Data Cleaning
 
@@ -231,9 +229,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 <br><br>
 
-## Crime Data
-
-<br>
+## 3. Crime Data
 
 ### The Steps of Crime Data Cleaning
 
@@ -402,18 +398,24 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
    `hdfs dfs -rm -r /user/<your netid>/project/311_type_profiled`
 3. Profile the types in 311 dataset.  
    `hadoop jar TypeStatDriver.jar TypeStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_profiled`
-4. Go to the directory.  
+4. Check the result of data profiling.  
+   `hdfs dfs -cat /user/<your netid>/project/311_type_profiled/part-r-00000`
+5. Go to the directory.  
    `cd profiling_code/311_data/data_profiling_type_len`
-5. Remove the output folder if it exists.  
+6. Remove the output folder if it exists.  
    `hdfs dfs -rm -r /user/<your netid>/project/311_type_len_profiled`
-6. Profile the length of types in 311 dataset.  
+7. Profile the length of types in 311 dataset.  
    `hadoop jar TypeLenDriver.jar TypeLenDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_len_profiled`
-7. Go to the directory.  
+8. Check the result of data profiling.  
+   `hdfs dfs -cat /user/<your netid>/project/311_type_len_profiled/part-r-00000`
+9. Go to the directory.  
    `cd profiling_code/311_data/data_profiling_year`
-8. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/311_year_profiled`
-9. Profile the length of types in 311 dataset.  
-   `hadoop jar YearStatDriver.jar YearStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_year_profiled`
+10. Remove the output folder if it exists.  
+    `hdfs dfs -rm -r /user/<your netid>/project/311_year_profiled`
+11. Profile the length of types in 311 dataset.  
+    `hadoop jar YearStatDriver.jar YearStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_year_profiled`
+12. Check the result of data profiling.  
+    `hdfs dfs -cat /user/<your netid>/project/311_year_profiled/part-r-00000`
 
 <br>
 
