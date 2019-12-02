@@ -119,6 +119,8 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
    `cd etl_code/restaurant_data/data_cleaning`
 2. Execute `DataCleaning.sh`.  
    `./DataCleaning.sh`
+3. Check the data cleaning code is run successfully.  
+   `hdfs dfs -ls /user/jl11046/Final/phase0/ETL/DataCleaningOutput`
 
 <br>
 
@@ -148,6 +150,8 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
    `cd code_iterations/phase1/LinearRegression`
 6. Run simple linear regression on the joined data.  
    `./execute.sh`
+7. Check simple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase1/LR/output/*`
 
 <br>
 
@@ -183,6 +187,8 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
    `cd code_iterations/phase2/LinearRegression`
 6. Run OLS multiple linear regression on the joined data.  
    `./execute.sh`
+7. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/*`
 
 <br>
 
@@ -420,7 +426,12 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 <br>
 
 ### The Steps of Restaurant Data Profiling
-
+1. Go to the directory.  
+   `cd profiling_code/restaurant_data/data_profiling`
+2. Execute `execute.sh`.  
+   `./execute.sh`
+3. Check the result of data profiling.  
+   `hdfs dfs -cat /user/jl11046/Final/phase0/ETL/DataProfilingOutput/*
 <br>
 
 ### The Steps of Crime Data Profiling
@@ -466,3 +477,30 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 <br>
 
 ![rm2](screenshots/rm2.png)
+
+<br><br>
+
+### Some visualization of phase1
+![sr1](screenshots/sr1.PNG)
+
+<br>
+
+![sr2](screenshots/sr2.PNG)
+
+<br>
+
+![sr3](screenshots/sr3.PNG)
+
+<br>
+
+![ht1](screenshots/ht1.PNG)
+
+<br>
+
+![ht2](screenshots/ht2.PNG)
+
+<br>
+
+![ht3](screenshots/ht3.PNG)
+
+<br><br>
