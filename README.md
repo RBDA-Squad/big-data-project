@@ -7,11 +7,11 @@ The following commands are executed in the working directory (this project path)
 ### The Steps of 311 Data Ingest
 
 1. Login to Dumbo.
-2. Download the dataset (csv format) through the URL:  
+2. Download the dataset (csv format) through the URL.  
    `curl -O https://nycopendata.socrata.com/api/views/erm2-nwe9/rows.csv?accessType=DOWNLOAD`
-3. Make a new directory in HDFS:  
+3. Make a new directory in HDFS.  
    `hdfs dfs -mkdir /user/<your netid>/project`
-4. Put the dataset file into HDFS:  
+4. Put the dataset file into HDFS.  
    `hdfs dfs -put 311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project`
 
 <br>
@@ -245,17 +245,19 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
    `hadoop jar DataCleaning.jar DataCleaning /user/<your netid>/project/rows.csv /user/<your netid>/project/dc_output`
 4. Go to the directory.  
    `cd etl_code/crime_data/zip_code_table`
-5. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/zct_output;`
-6. Generate the Zip Code matching table.  
+5. Put the zip code table file into HDFS.
+   `hdfs dfs -put zipcode.csv /user/<your netid>/project`
+6. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/zct_output`
+7. Generate the Zip Code matching table.  
    `hadoop jar ZipCodeTable.jar ZipCodeTable /user/<your netid>/project/zipcode.csv /user/<your netid>/project/zct_output`
-7. Go to the directory.  
+8. Go to the directory.  
    `cd etl_code/crime_data/lon_lat_to_zip_code`
-8. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/llzc_output;`
-9. Turn Latitude and Longitude into Zip Code.  
-   `hadoop jar LonLatToZipCode.jar LonLatToZipCode /user/<your netid>/project/dc_output/part-r-00000 /user/<your netid>/project/llzc_output`
-10. Check the final dataset after the cleaning process.  
+9. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/llzc_output`
+10. Turn Latitude and Longitude into Zip Code.  
+    `hadoop jar LonLatToZipCode.jar LonLatToZipCode /user/<your netid>/project/dc_output/part-r-00000 /user/<your netid>/project/llzc_output`
+11. Check the final dataset after the cleaning process.  
     `hdfs dfs -cat /user/<your netid>/project/llzc_output/part-r-00000`
 
 <br>
