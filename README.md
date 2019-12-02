@@ -7,11 +7,11 @@ The following commands are executed in the working directory (this project path)
 ### The Steps of 311 Data Ingest
 
 1. Login to Dumbo.
-2. Download the dataset (csv format) through the URL.  
+2. Download the dataset (csv format) through the URL:  
    `curl -O https://nycopendata.socrata.com/api/views/erm2-nwe9/rows.csv?accessType=DOWNLOAD`
-3. Make a new directory in HDFS.  
+3. Make a new directory in HDFS:  
    `hdfs dfs -mkdir /user/<your netid>/project`
-4. Put the dataset file into HDFS.  
+4. Put the dataset file into HDFS:  
    `hdfs dfs -put 311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project`
 
 <br>
@@ -58,7 +58,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 1. Go to the directory.  
    `cd etl_code/311_data/data_cleaning`
 2. Clean the 311 dataset.  
-   \ `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
+   `hadoop jar CleaningDriver.jar CleaningDriver /user/<your netid>/project/311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project/311_cleaned`
 
 <br>
 
@@ -395,6 +395,25 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 ## Data Profiling Stage
 
 ### The Steps of 311 Data Profiling
+
+1. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_type`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_type_profiled`
+3. Profile the types in 311 dataset.  
+   `hadoop jar TypeStatDriver.jar TypeStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_profiled`
+4. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_type_len`
+5. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_type_len_profiled`
+6. Profile the length of types in 311 dataset.  
+   `hadoop jar TypeLenDriver.jar TypeLenDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_len_profiled`
+7. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_year`
+8. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_year_profiled`
+9. Profile the length of types in 311 dataset.  
+   `hadoop jar YearStatDriver.jar YearStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_year_profiled`
 
 <br>
 
