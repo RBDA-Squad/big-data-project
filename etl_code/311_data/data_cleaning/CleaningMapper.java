@@ -22,7 +22,7 @@ public class CleaningMapper extends Mapper<LongWritable, Text, Text, NullWritabl
     counter1.increment(1L);
 
     String[] keySplit = {
-      valueSplit[1], valueSplit[5], valueSplit[38], valueSplit[39]
+      valueSplit[1], valueSplit[5], valueSplit[8], valueSplit[38], valueSplit[39]
     };
 
     // count invalid # of lines

@@ -7,11 +7,11 @@ The following commands are executed in the working directory (this project path)
 ### The Steps of 311 Data Ingest
 
 1. Login to Dumbo.
-2. Download the dataset (csv format) through the URL.  
+2. Download the dataset (csv format) through the URL:  
    `curl -O https://nycopendata.socrata.com/api/views/erm2-nwe9/rows.csv?accessType=DOWNLOAD`
-3. Make a new directory in HDFS.  
+3. Make a new directory in HDFS:  
    `hdfs dfs -mkdir /user/<your netid>/project`
-4. Put the dataset file into HDFS.  
+4. Put the dataset file into HDFS:  
    `hdfs dfs -put 311_Service_Requests_from_2010_to_Present.csv /user/<your netid>/project`
 
 <br>
@@ -396,6 +396,25 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 ### The Steps of 311 Data Profiling
 
+1. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_type`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_type_profiled`
+3. Profile the types in 311 dataset.  
+   `hadoop jar TypeStatDriver.jar TypeStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_profiled`
+4. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_type_len`
+5. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_type_len_profiled`
+6. Profile the length of types in 311 dataset.  
+   `hadoop jar TypeLenDriver.jar TypeLenDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_len_profiled`
+7. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_year`
+8. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_year_profiled`
+9. Profile the length of types in 311 dataset.  
+   `hadoop jar YearStatDriver.jar YearStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_year_profiled`
+
 <br>
 
 ### The Steps of Restaurant Data Profiling
@@ -427,17 +446,14 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 ### The attempts for turning latitude and longitude into zip code through Google Map API
 
-1. Python script is in the following path:  
-   `ZipCodeAPI/ZipCodeAPI.py`
-2. Java script is in the following path:  
-   `ZipCodeAPI/ZipCodeAPI.java`
+- Python script is in the following path:  
+   `etl_code/crime_data/zip_code_api/ZipCodeAPI.py`
 
 <br>
 
 ### The references for Haversine formula (turning latitude and longitude into zip code)
 
 - https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
-- https://king39461.pixnet.net/blog/post/400140310-java-%E5%B7%B2%E7%9F%A5%E5%85%A9%E5%80%8B%E5%9C%B0%E9%BB%9E%E7%B6%93%E7%B7%AF%E5%BA%A6%E7%AE%97%E8%B7%9D%E9%9B%A2%EF%BC%88%E9%9D%9E%E5%B8%B8%E7%B2%BE%E7%A2%BA%EF%BC%89
 
 <br>
 
