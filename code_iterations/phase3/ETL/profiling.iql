@@ -1,0 +1,7 @@
+use jl11046;
+
+select cm_type, sum(num_of_cms) as cnt from crime_phase2_raw group by cm_type order by cnt desc;
+
+select cp_type, sum(num_of_cps) as cnt from 311_phase3 group by cp_type order by cnt desc;
+
+select cuisine, sum(num_of_rts) as cnt from rts_phase2_raw group by cuisine order by cnt desc;

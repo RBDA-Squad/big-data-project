@@ -1,0 +1,2 @@
+#!/bin/bash
+impala-shell -i "compute-1-1" -q "use jl11046; drop table 311_phase3_raw; drop table 311_phase3_extracted;"

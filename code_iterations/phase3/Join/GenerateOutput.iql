@@ -1,0 +1,3 @@
+use jl11046;
+
+select * from phase3_joined;

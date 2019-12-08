@@ -1,0 +1,112 @@
+X:
+	Restaurants:
+		American
+		Chinese
+		Mexican
+		Italian
+		Japanese
+		Latin (Cuban, Dominican, Puerto Rican, South & Central American)
+		Caribbean
+		Spanish
+		Asian
+		Jewish/Kosher
+		Indian
+		Thai
+		Korean
+		French
+		Mediterranean
+		Middle Eastern
+		Irish
+		Greek
+		Vietnamese/Cambodian/Malaysia
+		Peruvian
+		African
+		Turkish
+		Eastern European
+		Russian
+		Hawaiian
+		Bangladeshi
+		Filipino
+		Pakistani
+		Brazilian
+		German
+		Polish
+		Armenian
+		Australian
+		Ethiopian
+		Afghan
+		Egyptian
+		English
+		Portuguese
+	Complaints:
+		Noise - Residential
+		Blocked Driveway
+		Illegal Parking
+		Street Condition
+		HEAT/HOT WATER
+		Street Light Condition
+		PLUMBING
+		Noise - Street/Sidewalk
+		Water System
+		GENERAL CONSTRUCTION
+		Noise - Commercial
+		UNSANITARY CONDITION
+		Request Large Bulky Item Collection
+		PAINT - PLASTER
+		Damaged Tree
+		Sanitation Condition
+		Dirty Conditions
+		Rodent
+		General Construction/Plumbing
+		PAINT/PLASTER
+		Homeless Person Assistance
+		Animal Abuse
+		SAFETY
+		Drug Activity
+		
+	
+Y:
+	Crimes:
+		DANGEROUS DRUGS	
+		CRIMINAL TRESPASS
+		PETIT LARCENY
+		VEHICLE AND TRAFFIC LAWS
+		FELONY ASSAULT
+		POSSESSION OF STOLEN PROPERTY 5
+		CRIMINAL MISCHIEF & RELATED OFFENSES
+		ROBBERY
+		GRAND LARCENY
+		INTOXICATED & IMPAIRED DRIVING
+		OFFENSES AGAINST PUBLIC ADMINISTRATION
+		DANGEROUS WEAPONS
+		FORGERY
+		BURGLARY
+		ASSAULT 3 & RELATED OFFENSES
+		DISORDERLY CONDUCT
+		OFFENSES INVOLVING FRAUD
+		SEX CRIMES
+		FRAUDS
+		PROSTITUTION & RELATED OFFENSES
+		F.C.A. P.I.N.O.S.
+		GRAND LARCENY OF MOTOR VEHICLE
+		ADMINISTRATIVE CODE
+		OFF. AGNST PUB ORD SENSBLTY & RGHTS TO PRIV
+		GAMBLING
+		MURDER & NON-NEGL. MANSLAUGHTER
+		FORCIBLE TOUCHING
+		THEFT-FRAUD
+		OFFENSES AGAINST THE PERSON
+		MOVING INFRACTIONS
+		OFFENSES RELATED TO CHILDREN
+		FRAUDULENT ACCOSTING
+		HARRASSMENT 2
+		OFFENSES AGAINST PUBLIC SAFETY
+		ARSON
+		KIDNAPPING & RELATED OFFENSES
+		LOITERING
+		ANTICIPATORY OFFENSES
+		NEW YORK CITY HEALTH CODE
+		ENDAN WELFARE INCOMP
+		PARKING OFFENSES
+		HOMICIDE-NEGLIGENT-VEHICLE
+		DISRUPTION OF A RELIGIOUS SERVICE
