@@ -181,15 +181,36 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
    `./ConstructTables.sh`
 3. Go to the Join directory.  
    `cd code_iterations/phase2/Join`
-4. Join restaurant table, 311 table, crime table.  
+4. Construct table of complaints and crimes for analytic phase2.
+   `./ConstructTables.sh`
+5. Join restaurant table, 311 table, crime table.  
    `./JoinTables.sh`
-5. Go to the linear regression directory.  
-   `cd code_iterations/phase2/LinearRegression`
-6. Run OLS multiple linear regression on the joined data.  
+   
+### Phase 2 - Running Analytics
+1. Go to the linear regression directory.  
+   `cd code_iterations/phase2/LinearRegression/no_transformation/complaints_to_crimes`
+2. Run OLS multiple linear regression on the complaint data and crime data.  
    `./execute.sh`
-7. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/*`
-
+3. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/cps_to_cms`
+4. Go to the linear regression directory.  
+   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_and_complaints_to_crimes`
+5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
+   `./execute.sh`
+6. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_and_cps_to_cms`
+7. Go to the linear regression directory.  
+   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_complaints`
+8. Run OLS multiple linear regression on the restaurant data and complaint data.  
+   `./execute.sh`
+9. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cps`
+10. Go to the linear regression directory.  
+   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_crimes`
+11. Run OLS multiple linear regression on the restaurant data and crime data.  
+   `./execute.sh`
+12. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cms`
 <br>
 
 ### Restaurant Data Schema (Phase 2)
@@ -228,12 +249,53 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 <br>
 
+### Phase 3 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
+
+1. Go to the ETL directory.  
+   `cd code_iterations/phase3/ETL`
+2. Construct table of restaurants needed for analytic phase3.  
+   `./ConstructTables.sh`
+3. Go to the Join directory.  
+   `cd code_iterations/phase3/Join`
+4. Construct table of complaints and crimes for analytic phase3.
+   `./ConstructTables.sh`
+5. Join restaurant table, 311 table, crime table.  
+   `./JoinTables.sh`
+   
+### Phase 3 - Running Analytics
+1. Go to the linear regression directory.  
+   `cd code_iterations/phase3/LinearRegression/ideal_transformation/complaints_to_crimes`
+2. Run OLS multiple linear regression on the complaint data and crime data.  
+   `./execute.sh`
+3. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/cps_to_cms`
+4. Go to the linear regression directory.  
+   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_and_complaints_to_crimes`
+5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
+   `./execute.sh`
+6. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_and_cps_to_cms`
+7. Go to the linear regression directory.  
+   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_complaints`
+8. Run OLS multiple linear regression on the restaurant data and complaint data.  
+   `./execute.sh`
+9. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cps`
+10. Go to the linear regression directory.  
+   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_crimes`
+11. Run OLS multiple linear regression on the restaurant data and crime data.  
+   `./execute.sh`
+12. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cms`
+<br>
+
 ### The references for Apache Commons Math 3.3 Linear Regression API
 
 - https://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/regression/SimpleRegression.html
 - https://commons.apache.org/proper/commons-math/javadocs/api-3.0/org/apache/commons/math3/stat/regression/OLSMultipleLinearRegression.html
 
 <br><br>
+
 
 ## 3. Crime Data
 
