@@ -21,25 +21,7 @@ public class LinearRegressionReducer
           throws IOException, InterruptedException {
         OLSMultipleLinearRegression sr = new OLSMultipleLinearRegression();
 	int r = 163;
-	int c = 0;
-	switch (String.valueOf(key)){
-		case "Robbery":
-			c = 41;
-			break;
-		case "Burglary":
-			c = 80;
-			break;
-		case "Weapons":
-			c = 15;
-			break;
-		case "sexCrimes":
-			c = 92;
-			break;
-		case "Murder":
-			c = 45;
-			break;
-	}
-
+	int c = 38;
 	double[][] x = new double[r][c];
 	double[] y = new double[r];
 	int i = 0;
@@ -61,18 +43,18 @@ public class LinearRegressionReducer
 	for (double b: beta){
 		coef = coef + " " + String.valueOf(b);
 	}
-
-	String irrelevantFeatures = "irrelevant features:";
+	
+	int num_of_relevantFeatures = 0;
+	String relevantFeatures = "relevant features:";
 	for (int j = 0; j < c; ++j){
 		double z_score = Math.abs(beta[j]) / sde[j];
-		if (z_score < 1.96)
-			if (j < 38)
-				irrelevantFeatures = irrelevantFeatures + " " + "rt" + String.valueOf(j + 1);
-			else
-				irrelevantFeatures = irrelevantFeatures + " " + "cp" + String.valueOf(j + 1 - 38);
+		if (z_score >= 1.96){
+			++num_of_relevantFeatures;
+			relevantFeatures = relevantFeatures + " " + "rt" + String.valueOf(j + 1);
+		}
 	}
 		
-        String stat = "adjustedRSquared: " + String.valueOf(adjustedRSquared) + "\n" + "RSquared: " + String.valueOf(RSquared) + "\n" + coef + "\n" + irrelevantFeatures + "\n";
+        String stat = "\n" + "adjustedRSquared: " + String.valueOf(adjustedRSquared) + "\n" + "RSquared: " + String.valueOf(RSquared) + "\n" + coef + "\n" + relevantFeatures + "\n" + String.valueOf(num_of_relevantFeatures);
 	context.write(key, new Text(stat));
     }
 }

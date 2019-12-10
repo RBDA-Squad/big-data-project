@@ -21,7 +21,7 @@ public class LinearRegressionReducer
           throws IOException, InterruptedException {
         OLSMultipleLinearRegression sr = new OLSMultipleLinearRegression();
 	int r = 163;
-	int c = 160;
+	int c = 38;
 	double[][] x = new double[r][c];
 	double[] y = new double[r];
 	int i = 0;
@@ -50,10 +50,7 @@ public class LinearRegressionReducer
 		double z_score = Math.abs(beta[j]) / sde[j];
 		if (z_score >= 1.96){
 			++num_of_relevantFeatures;
-			if (j < 38)
-				relevantFeatures = relevantFeatures + " " + "rt" + String.valueOf(j + 1);
-			else
-				relevantFeatures = relevantFeatures + " " + "cp" + String.valueOf(j + 1 - 38);
+			relevantFeatures = relevantFeatures + " " + "rt" + String.valueOf(j + 1);
 		}
 	}
 		
