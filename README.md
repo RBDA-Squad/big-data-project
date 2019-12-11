@@ -126,7 +126,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 2. Execute `DataCleaning.sh`.  
    `./DataCleaning.sh`
 3. Check the data cleaning code is run successfully.  
-   `hdfs dfs -ls /user/jl11046/Final/phase0/ETL/DataCleaningOutput`
+   `hdfs dfs -ls /user/<your netid>/Final/phase0/ETL/DataCleaningOutput`
 
 <br>
 
@@ -201,7 +201,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 2. Execute `execute.sh`.  
    `./execute.sh`
 3. Check the result of data profiling.  
-   `hdfs dfs -cat /user/jl11046/Final/phase0/ETL/DataProfilingOutput/*`
+   `hdfs dfs -cat /user/<your netid>/Final/phase0/ETL/DataProfilingOutput/*`
 
 <br><br>
 
@@ -383,7 +383,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 6. Run simple linear regression on the joined data.  
    `./execute.sh`
 7. Check simple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase1/LR/output/*`
+   `hdfs dfs -cat /user/<your netid>/Final/phase1/LR/output/*`
 
 <br>
 
@@ -429,25 +429,25 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 2. Run OLS multiple linear regression on the complaint data and crime data.  
    `./execute.sh`
 3. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/cps_to_cms`
+   `hdfs dfs -cat /user/<your netid>/Final/phase2/LR/output/no_transformation/cps_to_cms`
 4. Go to the linear regression directory.  
    `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_and_complaints_to_crimes`
 5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
    `./execute.sh`
 6. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_and_cps_to_cms`
+   `hdfs dfs -cat /user/<your netid>/Final/phase2/LR/output/no_transformation/rts_and_cps_to_cms`
 7. Go to the linear regression directory.  
    `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_complaints`
 8. Run OLS multiple linear regression on the restaurant data and complaint data.  
    `./execute.sh`
 9. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cps`
+   `hdfs dfs -cat /user/<your netid>/Final/phase2/LR/output/no_transformation/rts_to_cps`
 10. Go to the linear regression directory.  
     `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_crimes`
 11. Run OLS multiple linear regression on the restaurant data and crime data.  
     `./execute.sh`
 12. Check multiple linear regression output.  
-     `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cms`
+     `hdfs dfs -cat /user/<your netid>/Final/phase2/LR/output/no_transformation/rts_to_cms`
 
 <br>
 
@@ -509,25 +509,25 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 2. Run OLS multiple linear regression on the complaint data and crime data.  
    `./execute.sh`
 3. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/cps_to_cms`
+   `hdfs dfs -cat /user/<your netid>/Final/phase3/LR/output/ideal_transformation/cps_to_cms`
 4. Go to the linear regression directory.  
    `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_and_complaints_to_crimes`
 5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
    `./execute.sh`
 6. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_and_cps_to_cms`
+   `hdfs dfs -cat /user/<your netid>/Final/phase3/LR/output/ideal_transformation/rts_and_cps_to_cms`
 7. Go to the linear regression directory.  
    `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_complaints`
 8. Run OLS multiple linear regression on the restaurant data and complaint data.  
    `./execute.sh`
 9. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cps`
+   `hdfs dfs -cat /user/<your netid>/Final/phase3/LR/output/ideal_transformation/rts_to_cps`
 10. Go to the linear regression directory.  
     `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_crimes`
 11. Run OLS multiple linear regression on the restaurant data and crime data.  
     `./execute.sh`
 12. Check multiple linear regression output.  
-     `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cms`
+     `hdfs dfs -cat /user/<your netid>/Final/phase3/LR/output/ideal_transformation/rts_to_cms`
 
 <br>
 
