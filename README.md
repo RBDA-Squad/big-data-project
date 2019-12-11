@@ -18,6 +18,20 @@ The following commands are executed in the working directory (this project path)
 
 <br>
 
+### The Steps of Crime Data Ingest
+
+1. Login to Dumbo.
+2. Download the dataset (csv format) through the URL.  
+   `curl -O https://data.cityofnewyork.us/api/views/8h9b-rp9u/rows.csv?accessType=DOWNLOAD`
+3. Change the file name to a shorter one.  
+   `mv rows.csv?accessType=DOWNLOAD rows.csv`
+4. Make a new directory in HDFS.  
+   `hdfs dfs -mkdir /user/<your netid>/project`
+5. Put the dataset file into HDFS.  
+   `hdfs dfs -put rows.csv /user/<your netid>/project`
+
+<br>
+
 ### The Steps of Restaurant Data Ingest
 
 1. Log on to Dumbo.
@@ -30,20 +44,6 @@ The following commands are executed in the working directory (this project path)
 
 or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.  
 `./data_ingest/restaurant_data/DataIngest.sh`
-
-<br>
-
-### The Steps of Crime Data Ingest
-
-1. Login to Dumbo.
-2. Download the dataset (csv format) through the URL.  
-   `curl -O https://data.cityofnewyork.us/api/views/8h9b-rp9u/rows.csv?accessType=DOWNLOAD`
-3. Change the file name to a shorter one.  
-   `mv rows.csv?accessType=DOWNLOAD rows.csv`
-4. Make a new directory in HDFS.  
-   `hdfs dfs -mkdir /user/<your netid>/project`
-5. Put the dataset file into HDFS.  
-   `hdfs dfs -put rows.csv /user/<your netid>/project`
 
 <br><br>
 
@@ -72,232 +72,9 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 | Latitude       | Double | The latitude that the complaint took place  |              |
 | Longitude      | Double | The longitude that the complaint took place |              |
 
-<br>
-
-### Phase 1 - Count the complaint data for different zip code's areas (analytics purpose)
-
-1. Go to the directory.  
-   `cd etl_code/311_data/complaint_count_by_zipcode`
-2. Generate the count of complaint by zipcode.  
-   `hadoop jar ZipcodeCountDriver.jar ZipcodeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_count_by_zipcode`
-
-<br>
-
-### 311 Data Schema (Phase 1)
-
-| Column name | Type   |
-| ----------- | ------ |
-| Zipcode     | String |
-| Count       | Long   |
-
-<br>
-
-### Phase 2 - Count the complaint data for different complaint types in each zip code area (analytics purpose)
-
-1. Go to the directory.  
-   `cd etl_code/311_data/complaint_types_count_by_zipcode`
-2. Generate the count of complaint types by zipcode.  
-   `hadoop jar ComplaintTypeCountDriver.jar ComplaintTypeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_type_count_by_zipcode`
-
-<br>
-
-### 311 Data Schema (Phase 2)
-
-| Column name   | Type   |
-| ------------- | ------ |
-| Zipcode       | String |
-| ComplaintType | String |
-| Count         | String |
-
 <br><br>
 
-## 2. Restaurant Data
-
-### The Steps of Restaurant Data Cleaning
-
-1. Go to the data cleaning directory.  
-   `cd etl_code/restaurant_data/data_cleaning`
-2. Execute `DataCleaning.sh`.  
-   `./DataCleaning.sh`
-3. Check the data cleaning code is run successfully.  
-   `hdfs dfs -ls /user/jl11046/Final/phase0/ETL/DataCleaningOutput`
-
-<br>
-
-### Restaurant Data Schema
-
-| Column name | Type   | Description                           | Valid length |
-| ----------- | ------ | ------------------------------------- | ------------ |
-| CAMIS       | String | Unique identifier for the restaurant. | 8            |
-| BORO        | String | Borough of restaurant location.       |              |
-| CUISINE     | String | Restaurant cuisine.                   |              |
-| LATITUDE    | Double | Restaurant latitude.                  | 12 - 15      |
-| LONGITUDE   | Double | Restaurant longitude.                 | 12 - 16      |
-
-<br>
-
-### Phase 1 - Count the restaurant data for different zip code's areas (analytics purpose)
-
-1. Go to the ETL directory.  
-   `cd code_iterations/phase1/ETL`
-2. Construct table of restaurants needed for analytic phase1.  
-   `./DataCleaning.sh`
-3. Go to the Join directory.  
-   `cd code_iterations/phase1/Join`
-4. Join restaurant table, 311 table, crime table.  
-   `./JoinTables.sh`
-5. Go to the linear regression directory.  
-   `cd code_iterations/phase1/LinearRegression`
-6. Run simple linear regression on the joined data.  
-   `./execute.sh`
-7. Check simple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase1/LR/output/*`
-
-<br>
-
-### Restaurant Data Schema (Phase 1)
-
-| Column name | Type   |
-| ----------- | ------ |
-| zipcode     | String |
-| num_of_rts  | Bigint |
-
-### Joined Data Schema (Phase 1)
-
-| Column name | Type   |
-| ----------- | ------ |
-| zipcode     | String |
-| num_of_rts  | Bigint |
-| num_of_cps  | Bigint |
-| num_of_cms  | Bigint |
-
-<br>
-
-### Phase 2 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
-
-1. Go to the ETL directory.  
-   `cd code_iterations/phase2/ETL`
-2. Construct table of restaurants needed for analytic phase2.  
-   `./ConstructTables.sh`
-3. Go to the Join directory.  
-   `cd code_iterations/phase2/Join`
-4. Construct table of complaints and crimes for analytic phase2.
-   `./ConstructTables.sh`
-5. Join restaurant table, 311 table, crime table.  
-   `./JoinTables.sh`
-   
-### Phase 2 - Running Analytics
-1. Go to the linear regression directory.  
-   `cd code_iterations/phase2/LinearRegression/no_transformation/complaints_to_crimes`
-2. Run OLS multiple linear regression on the complaint data and crime data.  
-   `./execute.sh`
-3. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/cps_to_cms`
-4. Go to the linear regression directory.  
-   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_and_complaints_to_crimes`
-5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
-   `./execute.sh`
-6. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_and_cps_to_cms`
-7. Go to the linear regression directory.  
-   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_complaints`
-8. Run OLS multiple linear regression on the restaurant data and complaint data.  
-   `./execute.sh`
-9. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cps`
-10. Go to the linear regression directory.  
-   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_crimes`
-11. Run OLS multiple linear regression on the restaurant data and crime data.  
-   `./execute.sh`
-12. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cms`
-<br>
-
-### Restaurant Data Schema (Phase 2)
-
-| Column name | Type   |
-| ----------- | ------ |
-| zipcode     | String |
-| american    | Bigint |
-| chinese     | Bigint |
-| mexican     | Bigint |
-| italian     | Bigint |
-| japanese    | Bigint |
-
-<br>
-
-### Joined Data Schema (Phase 2)
-
-| Column name  | Type   |
-| ------------ | ------ |
-| zipcode      | String |
-| american     | Bigint |
-| chinese      | Bigint |
-| mexican      | Bigint |
-| italian      | Bigint |
-| japanese     | Bigint |
-| noise        | Bigint |
-| homeless     | Bigint |
-| animalabuse  | Bigint |
-| safety       | Bigint |
-| drugactivity | Bigint |
-| robbery      | Bigint |
-| burglary     | Bigint |
-| weapons      | Bigint |
-| sexcrimes    | Bigint |
-| murder       | Bigint |
-
-<br>
-
-### Phase 3 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
-
-1. Go to the ETL directory.  
-   `cd code_iterations/phase3/ETL`
-2. Construct table of restaurants needed for analytic phase3.  
-   `./ConstructTables.sh`
-3. Go to the Join directory.  
-   `cd code_iterations/phase3/Join`
-4. Construct table of complaints and crimes for analytic phase3.
-   `./ConstructTables.sh`
-5. Join restaurant table, 311 table, crime table.  
-   `./JoinTables.sh`
-   
-### Phase 3 - Running Analytics
-1. Go to the linear regression directory.  
-   `cd code_iterations/phase3/LinearRegression/ideal_transformation/complaints_to_crimes`
-2. Run OLS multiple linear regression on the complaint data and crime data.  
-   `./execute.sh`
-3. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/cps_to_cms`
-4. Go to the linear regression directory.  
-   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_and_complaints_to_crimes`
-5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
-   `./execute.sh`
-6. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_and_cps_to_cms`
-7. Go to the linear regression directory.  
-   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_complaints`
-8. Run OLS multiple linear regression on the restaurant data and complaint data.  
-   `./execute.sh`
-9. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cps`
-10. Go to the linear regression directory.  
-   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_crimes`
-11. Run OLS multiple linear regression on the restaurant data and crime data.  
-   `./execute.sh`
-12. Check multiple linear regression output.  
-   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cms`
-<br>
-
-### The references for Apache Commons Math 3.3 Linear Regression API
-
-- https://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/regression/SimpleRegression.html
-- https://commons.apache.org/proper/commons-math/javadocs/api-3.0/org/apache/commons/math3/stat/regression/OLSMultipleLinearRegression.html
-
-<br><br>
-
-
-## 3. Crime Data
+## 2. Crime Data
 
 ### The Steps of Crime Data Cleaning
 
@@ -338,7 +115,140 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 | Longitude   | Double | The longitude that the arrest take place.    | 10 - 13, 18  |
 | ZipCode     | String | The zip code that the arrest take place.     |              |
 
+<br><br>
+
+## 3. Restaurant Data
+
+### The Steps of Restaurant Data Cleaning
+
+1. Go to the data cleaning directory.  
+   `cd etl_code/restaurant_data/data_cleaning`
+2. Execute `DataCleaning.sh`.  
+   `./DataCleaning.sh`
+3. Check the data cleaning code is run successfully.  
+   `hdfs dfs -ls /user/jl11046/Final/phase0/ETL/DataCleaningOutput`
+
 <br>
+
+### Restaurant Data Schema
+
+| Column name | Type   | Description                           | Valid length |
+| ----------- | ------ | ------------------------------------- | ------------ |
+| CAMIS       | String | Unique identifier for the restaurant. | 8            |
+| BORO        | String | Borough of restaurant location.       |              |
+| CUISINE     | String | Restaurant cuisine.                   |              |
+| LATITUDE    | Double | Restaurant latitude.                  | 12 - 15      |
+| LONGITUDE   | Double | Restaurant longitude.                 | 12 - 16      |
+
+<br><br>
+
+## Data Profiling Stage
+
+### The Steps of 311 Data Profiling
+
+1. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_type`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_type_profiled`
+3. Profile the types in 311 dataset.  
+   `hadoop jar TypeStatDriver.jar TypeStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_profiled`
+4. Check the result of data profiling.  
+   `hdfs dfs -cat /user/<your netid>/project/311_type_profiled/part-r-00000`
+5. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_type_len`
+6. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/311_type_len_profiled`
+7. Profile the length of types in 311 dataset.  
+   `hadoop jar TypeLenDriver.jar TypeLenDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_len_profiled`
+8. Check the result of data profiling.  
+   `hdfs dfs -cat /user/<your netid>/project/311_type_len_profiled/part-r-00000`
+9. Go to the directory.  
+   `cd profiling_code/311_data/data_profiling_year`
+10. Remove the output folder if it exists.  
+    `hdfs dfs -rm -r /user/<your netid>/project/311_year_profiled`
+11. Profile the length of types in 311 dataset.  
+    `hadoop jar YearStatDriver.jar YearStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_year_profiled`
+12. Check the result of data profiling.  
+    `hdfs dfs -cat /user/<your netid>/project/311_year_profiled/part-r-00000`
+
+<br>
+
+### The Steps of Crime Data Profiling
+
+1. Go to the directory.  
+   `cd profiling_code/crime_data/data_profiling_1`
+2. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/dp_1_output`
+3. Profile the crime dataset.  
+   `hadoop jar DataProfiling.jar DataProfiling /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_1_output`
+4. Check the result of data profiling.  
+   `hdfs dfs -cat /user/<your netid>/project/dp_1_output/part-r-00000`
+5. Go to the directory.  
+   `cd profiling_code/crime_data/data_profiling_2`
+6. Remove the output folder if it exists.  
+   `hdfs dfs -rm -r /user/<your netid>/project/dp_2_output`
+7. Profile the crime dataset for checking the crime type characteristics.  
+   `hadoop jar DataProfiling2.jar DataProfiling2 /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_2_output`
+8. Check the result of data profiling for crime type characteristics.  
+   `hdfs dfs -cat /user/<your netid>/project/dp_2_output/part-r-00000`
+
+<br>
+
+### The Steps of Restaurant Data Profiling
+
+1. Go to the directory.  
+   `cd profiling_code/restaurant_data/data_profiling`
+2. Execute `execute.sh`.  
+   `./execute.sh`
+3. Check the result of data profiling.  
+   `hdfs dfs -cat /user/jl11046/Final/phase0/ETL/DataProfilingOutput/*`
+
+<br><br>
+
+## Analytics Stage
+
+<br>
+
+## 1. 311 Data
+
+### Phase 1 - Count the complaint data for different zip code's areas (analytics purpose)
+
+1. Go to the directory.  
+   `cd etl_code/311_data/complaint_count_by_zipcode`
+2. Generate the count of complaint by zipcode.  
+   `hadoop jar ZipcodeCountDriver.jar ZipcodeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_count_by_zipcode`
+
+<br>
+
+### 311 Data Schema (Phase 1)
+
+| Column name | Type   |
+| ----------- | ------ |
+| Zipcode     | String |
+| Count       | Long   |
+
+<br>
+
+### Phase 2 - Count the complaint data for different complaint types in each zip code area (analytics purpose)
+
+1. Go to the directory.  
+   `cd etl_code/311_data/complaint_types_count_by_zipcode`
+2. Generate the count of complaint types by zipcode.  
+   `hadoop jar ComplaintTypeCountDriver.jar ComplaintTypeCountDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_complaint_type_count_by_zipcode`
+
+<br>
+
+### 311 Data Schema (Phase 2)
+
+| Column name   | Type   |
+| ------------- | ------ |
+| Zipcode       | String |
+| ComplaintType | String |
+| Count         | String |
+
+<br><br>
+
+## 2. Crime Data
 
 ### Phase 1 - Count the crime data for different zip code's areas (analytics purpose)
 
@@ -456,64 +366,175 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 
 <br><br>
 
-## Data Profiling Stage
+## 3. Restaurant Data
 
-### The Steps of 311 Data Profiling
+### Phase 1 - Count the restaurant data for different zip code's areas (analytics purpose)
 
-1. Go to the directory.  
-   `cd profiling_code/311_data/data_profiling_type`
-2. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/311_type_profiled`
-3. Profile the types in 311 dataset.  
-   `hadoop jar TypeStatDriver.jar TypeStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_profiled`
-4. Check the result of data profiling.  
-   `hdfs dfs -cat /user/<your netid>/project/311_type_profiled/part-r-00000`
-5. Go to the directory.  
-   `cd profiling_code/311_data/data_profiling_type_len`
-6. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/311_type_len_profiled`
-7. Profile the length of types in 311 dataset.  
-   `hadoop jar TypeLenDriver.jar TypeLenDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_type_len_profiled`
-8. Check the result of data profiling.  
-   `hdfs dfs -cat /user/<your netid>/project/311_type_len_profiled/part-r-00000`
-9. Go to the directory.  
-   `cd profiling_code/311_data/data_profiling_year`
-10. Remove the output folder if it exists.  
-    `hdfs dfs -rm -r /user/<your netid>/project/311_year_profiled`
-11. Profile the length of types in 311 dataset.  
-    `hadoop jar YearStatDriver.jar YearStatDriver /user/<your netid>/project/311_cleaned /user/<your netid>/project/311_year_profiled`
-12. Check the result of data profiling.  
-    `hdfs dfs -cat /user/<your netid>/project/311_year_profiled/part-r-00000`
-
-<br>
-
-### The Steps of Restaurant Data Profiling
-1. Go to the directory.  
-   `cd profiling_code/restaurant_data/data_profiling`
-2. Execute `execute.sh`.  
+1. Go to the ETL directory.  
+   `cd code_iterations/phase1/ETL`
+2. Construct table of restaurants needed for analytic phase1.  
+   `./DataCleaning.sh`
+3. Go to the Join directory.  
+   `cd code_iterations/phase1/Join`
+4. Join restaurant table, 311 table, crime table.  
+   `./JoinTables.sh`
+5. Go to the linear regression directory.  
+   `cd code_iterations/phase1/LinearRegression`
+6. Run simple linear regression on the joined data.  
    `./execute.sh`
-3. Check the result of data profiling.  
-   `hdfs dfs -cat /user/jl11046/Final/phase0/ETL/DataProfilingOutput/*
+7. Check simple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase1/LR/output/*`
+
 <br>
 
-### The Steps of Crime Data Profiling
+### Restaurant Data Schema (Phase 1)
 
-1. Go to the directory.  
-   `cd profiling_code/crime_data/data_profiling_1`
-2. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/dp_1_output`
-3. Profile the crime dataset.  
-   `hadoop jar DataProfiling.jar DataProfiling /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_1_output`
-4. Check the result of data profiling.  
-   `hdfs dfs -cat /user/<your netid>/project/dp_1_output/part-r-00000`
-5. Go to the directory.  
-   `cd profiling_code/crime_data/data_profiling_2`
-6. Remove the output folder if it exists.  
-   `hdfs dfs -rm -r /user/<your netid>/project/dp_2_output`
-7. Profile the crime dataset for checking the crime type characteristics.  
-   `hadoop jar DataProfiling2.jar DataProfiling2 /user/<your netid>/project/rows.csv /user/<your netid>/project/dp_2_output`
-8. Check the result of data profiling for crime type characteristics.  
-   `hdfs dfs -cat /user/<your netid>/project/dp_2_output/part-r-00000`
+| Column name | Type   |
+| ----------- | ------ |
+| zipcode     | String |
+| num_of_rts  | Bigint |
+
+<br>
+
+### Joined Data Schema (Phase 1)
+
+| Column name | Type   |
+| ----------- | ------ |
+| zipcode     | String |
+| num_of_rts  | Bigint |
+| num_of_cps  | Bigint |
+| num_of_cms  | Bigint |
+
+<br>
+
+### Phase 2 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
+
+1. Go to the ETL directory.  
+   `cd code_iterations/phase2/ETL`
+2. Construct table of restaurants needed for analytic phase2.  
+   `./ConstructTables.sh`
+3. Go to the Join directory.  
+   `cd code_iterations/phase2/Join`
+4. Construct table of complaints and crimes for analytic phase2.
+   `./ConstructTables.sh`
+5. Join restaurant table, 311 table, crime table.  
+   `./JoinTables.sh`
+
+<br>
+
+### Phase 2 - Running Analytics
+
+1. Go to the linear regression directory.  
+   `cd code_iterations/phase2/LinearRegression/no_transformation/complaints_to_crimes`
+2. Run OLS multiple linear regression on the complaint data and crime data.  
+   `./execute.sh`
+3. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/cps_to_cms`
+4. Go to the linear regression directory.  
+   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_and_complaints_to_crimes`
+5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
+   `./execute.sh`
+6. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_and_cps_to_cms`
+7. Go to the linear regression directory.  
+   `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_complaints`
+8. Run OLS multiple linear regression on the restaurant data and complaint data.  
+   `./execute.sh`
+9. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cps`
+10. Go to the linear regression directory.  
+    `cd code_iterations/phase2/LinearRegression/no_transformation/restaurants_to_crimes`
+11. Run OLS multiple linear regression on the restaurant data and crime data.  
+    `./execute.sh`
+12. Check multiple linear regression output.  
+     `hdfs dfs -cat /user/jl11046/Final/phase2/LR/output/no_transformation/rts_to_cms`
+
+<br>
+
+### Restaurant Data Schema (Phase 2)
+
+| Column name | Type   |
+| ----------- | ------ |
+| zipcode     | String |
+| american    | Bigint |
+| chinese     | Bigint |
+| mexican     | Bigint |
+| italian     | Bigint |
+| japanese    | Bigint |
+
+<br>
+
+### Joined Data Schema (Phase 2)
+
+| Column name  | Type   |
+| ------------ | ------ |
+| zipcode      | String |
+| american     | Bigint |
+| chinese      | Bigint |
+| mexican      | Bigint |
+| italian      | Bigint |
+| japanese     | Bigint |
+| noise        | Bigint |
+| homeless     | Bigint |
+| animalabuse  | Bigint |
+| safety       | Bigint |
+| drugactivity | Bigint |
+| robbery      | Bigint |
+| burglary     | Bigint |
+| weapons      | Bigint |
+| sexcrimes    | Bigint |
+| murder       | Bigint |
+
+<br>
+
+### Phase 3 - Count the restaurant data for different restaurant types in each zip code area (analytics purpose)
+
+1. Go to the ETL directory.  
+   `cd code_iterations/phase3/ETL`
+2. Construct table of restaurants needed for analytic phase3.  
+   `./ConstructTables.sh`
+3. Go to the Join directory.  
+   `cd code_iterations/phase3/Join`
+4. Construct table of complaints and crimes for analytic phase3.
+   `./ConstructTables.sh`
+5. Join restaurant table, 311 table, crime table.  
+   `./JoinTables.sh`
+
+<br>
+
+### Phase 3 - Running Analytics
+
+1. Go to the linear regression directory.  
+   `cd code_iterations/phase3/LinearRegression/ideal_transformation/complaints_to_crimes`
+2. Run OLS multiple linear regression on the complaint data and crime data.  
+   `./execute.sh`
+3. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/cps_to_cms`
+4. Go to the linear regression directory.  
+   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_and_complaints_to_crimes`
+5. Run OLS multiple linear regression on the restaurant data, complaint data, and crime data.  
+   `./execute.sh`
+6. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_and_cps_to_cms`
+7. Go to the linear regression directory.  
+   `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_complaints`
+8. Run OLS multiple linear regression on the restaurant data and complaint data.  
+   `./execute.sh`
+9. Check multiple linear regression output.  
+   `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cps`
+10. Go to the linear regression directory.  
+    `cd code_iterations/phase3/LinearRegression/ideal_transformation/restaurants_to_crimes`
+11. Run OLS multiple linear regression on the restaurant data and crime data.  
+    `./execute.sh`
+12. Check multiple linear regression output.  
+     `hdfs dfs -cat /user/jl11046/Final/phase3/LR/output/ideal_transformation/rts_to_cms`
+
+<br>
+
+### The references for Apache Commons Math 3.3 Linear Regression API
+
+- https://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/regression/SimpleRegression.html
+- https://commons.apache.org/proper/commons-math/javadocs/api-3.0/org/apache/commons/math3/stat/regression/OLSMultipleLinearRegression.html
 
 <br><br>
 
@@ -543,6 +564,7 @@ or, simply execute `DataIngest.sh` in the folder `data_ingest/restaurant_data`.
 <br><br>
 
 ### Some visualization of phase1
+
 ![sr1](screenshots/sr1.PNG)
 
 <br>
